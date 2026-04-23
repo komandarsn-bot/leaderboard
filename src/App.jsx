@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("https://leaderboard-server-vgia.onrender.com")
+     fetch("https://leaderboard-server-vgia.onrender.com/leaderboard")
         .then((res) => res.json())
         .then(setData)
         .catch((error) => console.error("Ошибка автообновления:", error));
