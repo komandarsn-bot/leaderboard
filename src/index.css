@@ -4,8 +4,10 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+  color: #1e293b;
+}
 
 .page {
   min-height: 100vh;
@@ -115,18 +117,18 @@ background: linear-gradient(135deg, #f8fafc, #e0f2fe);
 }
 
 .table-wrap {
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: 18px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px;
   background: white;
   overflow: hidden;
-  font-size: 200px;
-  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 thead th {
@@ -134,12 +136,14 @@ thead th {
   top: 0;
   background: linear-gradient(135deg, #1d4ed8, #4338ca);
   color: white;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
-  padding: 16px 14px;
-  text-align: left;
+  padding: 14px 10px;
+  text-align: center;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  border: 1px solid #304766;
 }
 
 .th-content {
@@ -148,9 +152,13 @@ thead th {
   align-items: center;
   gap: 6px;
 }
-th {
-  text-align: center !important;
-  border-bottom: 2px solid #94a3b8;
+
+th,
+td {
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #304766;
 }
 
 .sort-icon {
@@ -171,10 +179,13 @@ tbody tr:hover {
 }
 
 td {
-  padding: 14px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 10px;
   color: #1e293b;
-  font-size: 14px;
+  word-break: break-word;
+}
+
+td:nth-child(3) {
+  font-family: "Pacifico", cursive;
 }
 
 .empty-state {
@@ -184,6 +195,17 @@ td {
   text-align: center;
   color: #64748b;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+@media (min-width: 1200px) {
+  table {
+    font-size: 24px;
+  }
+
+  th,
+  td {
+    padding: 18px 16px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -200,59 +222,35 @@ td {
     width: 100%;
   }
 
-  td:nth-child(3) {
-  font-family: 'Pacifico', cursive;
-}
-}
-th,
-td {
-  font-size: 22px !important;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #304766;
-}
-td:nth-child(3) {
-  font-family: 'Pacifico', cursive !important;
-}
-
-
-  
-@media (min-width: 1200px) {
-  table {
-    font-size: 26px;
-  }
-
-  th,
-  td {
-    padding: 18px 16px;
-  }
-}
-  @media (max-width: 768px) {
-  body {
-    margin: 0;
-  }
-
   .table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 8px;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 4px;
   }
 
   table {
-    min-width: 560px;
-    font-size: 16px !important;
+    width: 100%;
+    min-width: 100%;
+    table-layout: fixed;
+    font-size: 14px !important;
   }
 
   th,
   td {
-    font-size: 16px !important;
-    padding: 10px 8px !important;
+    font-size: 14px !important;
+    padding: 8px 4px !important;
     text-align: center;
     vertical-align: middle;
+    word-break: break-word;
+  }
+
+  thead th {
+    font-size: 13px !important;
+    padding: 8px 4px !important;
   }
 
   h1 {
-    font-size: 32px !important;
+    font-size: 28px !important;
     line-height: 1.2;
   }
 
@@ -266,7 +264,14 @@ td:nth-child(3) {
   }
 
   img {
-    max-width: 100%;
-    height: auto;
+    width: 48px !important;
+    height: 48px !important;
+    max-width: 48px !important;
+    object-fit: cover;
+  }
+
+  td:nth-child(3) {
+    font-family: "Pacifico", cursive;
+    font-size: 13px !important;
   }
 }
