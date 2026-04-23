@@ -12,7 +12,7 @@ export default function App() {
   const isTvMode = new URLSearchParams(window.location.search).get("tv") === "1";
 
   useEffect(() => {
-    fetch("https://leaderboard-server-vgia.onrender.com")
+    fetch("https://leaderboard-server-vgia.onrender.com/leaderboard")
       .then((res) => res.json())
       .then(setData)
       .catch((error) => console.error("Ошибка загрузки leaderboard:", error));
@@ -36,7 +36,7 @@ export default function App() {
     }
 
     try {
-      const response = await fetch("https://leaderboard-server-vgia.onrender.com", {
+      const response = await fetch("https://leaderboard-server-vgia.onrender.com/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
