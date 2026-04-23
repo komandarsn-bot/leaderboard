@@ -109,16 +109,20 @@ export default function App() {
       </h1>
 
       {!isTvMode && (
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-            marginBottom: "20px",
-          }}
-        >
+      <div
+  style={{
+    display: "flex",
+    gap: "10px",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap",
+    marginBottom: "20px",
+    width: "100%",
+    maxWidth: "900px",
+    marginLeft: "auto",
+    marginRight: "auto",
+  }}
+>
           <input
             type="text"
             placeholder="НИК"
