@@ -215,17 +215,8 @@ td:nth-child(3) {
   font-family: 'Pacifico', cursive !important;
 }
 
-@keyframes goldPulse {
-  0% {
-    background-color: #fff7cc;
-  }
-  50% {
-    background-color: #ffe066;
-  }
-  100% {
-    background-color: #fff7cc;
-  }
-}
+
+  
 @media (min-width: 1200px) {
   table {
     font-size: 26px;
