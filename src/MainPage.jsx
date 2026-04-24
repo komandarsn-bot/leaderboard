@@ -1,4 +1,3 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
@@ -12,9 +11,6 @@ const supabase = createClient(
 
 export default function MainPage() {
   const [data, setData] = useState([]);
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [avatar, setAvatar] = useState("ava1");
   const [sortKey, setSortKey] = useState(null);
   const [sortDir, setSortDir] = useState("asc");
 
@@ -48,37 +44,6 @@ export default function MainPage() {
       supabase.removeChannel(channel);
     };
   }, []);
-
-  const addScore = async () => {
-    if (!name.trim() || !amount) {
-      alert("Введи ник и сумму");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          amount,
-          avatar,
-        }),
-      });
-
-      const result = await response.json();
-      setData(result);
-
-      setName("");
-      setAmount("");
-      setAvatar("ava1");
-    } catch (error) {
-      alert("Ошибка запроса к серверу");
-      console.error(error);
-    }
-  };
 
   const sortedData = useMemo(() => {
     if (!sortKey || isTvMode) return data;
@@ -127,64 +92,6 @@ export default function MainPage() {
       >
         Таблица лидеров
       </h1>
-
-      {!isTvMode && (
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-            marginBottom: "20px",
-            width: "100%",
-            maxWidth: "900px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <input
-            type="text"
-            placeholder="НИК"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ padding: "10px", fontSize: "16px" }}
-          />
-
-          <input
-            type="number"
-            placeholder="Сумма оплаты"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            style={{ padding: "10px", fontSize: "16px" }}
-          />
-
-          <select
-            value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
-            style={{ padding: "10px", fontSize: "16px" }}
-          >
-            <option value="ava1">ava1</option>
-            <option value="ava2">ava2</option>
-            <option value="ava3">ava3</option>
-          </select>
-
-          <button
-            onClick={addScore}
-            style={{
-              padding: "10px 18px",
-              fontSize: "16px",
-              cursor: "pointer",
-              borderRadius: "8px",
-              border: "none",
-              background: "#1e293b",
-              color: "white",
-            }}
-          >
-            Добавить
-          </button>
-        </div>
-      )}
 
       {sortedData.length > 0 && (
         <div className="table-wrap">
@@ -256,4 +163,3 @@ export default function MainPage() {
     </div>
   );
 }
-
