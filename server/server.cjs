@@ -95,6 +95,18 @@ app.post("/add", async (req, res) => {
       if (error) throw error;
     }
 
+    const { error: transactionError } = await supabase
+      .from("transactions")
+      .insert({
+        nickname,
+        amount: Number(amount),
+        points: pointsToAdd,
+        avatar: avatar || "ava1",
+        action: "add",
+      });
+
+    if (transactionError) throw transactionError;
+
     const data = await getLeaderboard();
     res.json(data);
   } catch (error) {
