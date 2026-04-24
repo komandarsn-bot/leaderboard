@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
