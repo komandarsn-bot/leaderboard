@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   "https://jolawvvbcpgnrsvuolkw.supabase.co",
-  "ТВОЙ_sb_publishable_КЛЮЧ"
+  "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
 );
 
 export default function Admin() {
@@ -12,75 +12,33 @@ export default function Admin() {
   const [avatar, setAvatar] = useState("ava1");
 
   const addUser = async () => {
-    if (!name.trim() || !amount) {
-      alert("Заполни ник и сумму");
-      return;
-    }
-
-    const nickname = name.trim();
     const points = Math.floor(Number(amount) / 10);
 
-    const { data: existing, error: findError } = await supabase
+    const { data: existing } = await supabase
       .from("leaderboard")
       .select("*")
-      .eq("nickname", nickname)
-      .maybeSingle();
-
-    if (findError) {
-      alert("Ошибка поиска игрока");
-      console.error(findError);
-      return;
-    }
+      .eq("nickname", name)
+      .single();
 
     if (existing) {
-      const { error } = await supabase
+      await supabase
         .from("leaderboard")
-        .update({
-          points: Number(existing.points) + points,
-          avatar: existing.avatar || avatar,
-        })
+        .update({ points: existing.points + points })
         .eq("id", existing.id);
-
-      if (error) {
-        alert("Ошибка обновления");
-        console.error(error);
-        return;
-      }
     } else {
-      const { error } = await supabase.from("leaderboard").insert({
-        nickname,
-        points,
-        avatar,
+      await supabase.from("leaderboard").insert({
+        nickname: name,
+        points: points,
+        avatar: avatar,
       });
-
-      if (error) {
-        alert("Ошибка добавления");
-        console.error(error);
-        return;
-      }
     }
 
-    alert("Добавлено");
     setName("");
     setAmount("");
-    setAvatar("ava1");
   };
 
   const reset = async () => {
-    if (!confirm("Сбросить таблицу?")) return;
-
-    const { error } = await supabase
-      .from("leaderboard")
-      .delete()
-      .neq("nickname", "");
-
-    if (error) {
-      alert("Ошибка сброса");
-      console.error(error);
-      return;
-    }
-
-    alert("Сброшено");
+    await supabase.from("leaderboard").delete().neq("id", 0);
   };
 
   return (
@@ -94,16 +52,14 @@ export default function Admin() {
       />
 
       <input
-        type="number"
         placeholder="Сумма"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
 
-      <select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
+      <select onChange={(e) => setAvatar(e.target.value)}>
         <option value="ava1">ava1</option>
         <option value="ava2">ava2</option>
-        <option value="ava3">ava3</option>
       </select>
 
       <button onClick={addUser}>Добавить</button>
