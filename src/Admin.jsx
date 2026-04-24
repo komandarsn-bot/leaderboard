@@ -1,67 +1,48 @@
 import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
-const API_URL = "https://leaderboard-server-vgia.onrender.com";
+const supabase = createClient(
+  "https://jolawvvbcpgnrsvuolkw.supabase.co",
+  "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
+);
 
 export default function Admin() {
-  const [password, setPassword] = useState("");
-  const [authorized, setAuthorized] = useState(false);
-
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [avatar, setAvatar] = useState("ava1");
 
-  const checkPassword = () => {
-    if (password === "1234") {
-      setAuthorized(true);
+  const addUser = async () => {
+    const points = Math.floor(Number(amount) / 10);
+
+    const { data: existing } = await supabase
+      .from("leaderboard")
+      .select("*")
+      .eq("nickname", name)
+      .single();
+
+    if (existing) {
+      await supabase
+        .from("leaderboard")
+        .update({ points: existing.points + points })
+        .eq("id", existing.id);
     } else {
-      alert("Неверный пароль");
-    }
-  };
-
-  const addScore = async () => {
-    if (!name || !amount) {
-      alert("Заполни поля");
-      return;
+      await supabase.from("leaderboard").insert({
+        nickname: name,
+        points: points,
+        avatar: avatar,
+      });
     }
 
-    await fetch(`${API_URL}/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, amount, avatar }),
-    });
-
-    alert("Добавлено");
+    setName("");
+    setAmount("");
   };
 
   const reset = async () => {
-    if (!window.confirm("Сбросить таблицу?")) return;
-
-    await fetch(`${API_URL}/reset`, {
-      method: "POST",
-    });
-
-    alert("Сброшено");
+    await supabase.from("leaderboard").delete().neq("id", 0);
   };
 
-  if (!authorized) {
-    return (
-      <div style={{ padding: 40 }}>
-        <h2>Админ вход</h2>
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={checkPassword}>Войти</button>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: "20px" }}>
       <h2>Админ панель</h2>
 
       <input
@@ -76,21 +57,13 @@ export default function Admin() {
         onChange={(e) => setAmount(e.target.value)}
       />
 
-      <select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
+      <select onChange={(e) => setAvatar(e.target.value)}>
         <option value="ava1">ava1</option>
         <option value="ava2">ava2</option>
-        <option value="ava3">ava3</option>
       </select>
 
-      <br /><br />
-
-      <button onClick={addScore}>Добавить</button>
-
-      <br /><br />
-
-      <button onClick={reset} style={{ background: "red", color: "white" }}>
-        Сбросить всё
-      </button>
+      <button onClick={addUser}>Добавить</button>
+      <button onClick={reset}>Сбросить всё</button>
     </div>
   );
 }
