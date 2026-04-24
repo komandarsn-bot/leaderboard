@@ -1,5 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 import "./index.css";
+
+const API_URL = "https://leaderboard-server-vgia.onrender.com";
+
+const supabase = createClient(
+  "https://jolawvvbcpgnrsvuolkw.supabase.co",
+  "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
+);
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -11,22 +19,33 @@ export default function App() {
 
   const isTvMode = new URLSearchParams(window.location.search).get("tv") === "1";
 
-  useEffect(() => {
-    fetch("https://leaderboard-server-vgia.onrender.com/leaderboard")
-      .then((res) => res.json())
-      .then(setData)
-      .catch((error) => console.error("Ошибка загрузки leaderboard:", error));
-  }, []);
+  const loadData = async () => {
+    try {
+      const res = await fetch(`${API_URL}/leaderboard`);
+      const json = await res.json();
+      setData(json);
+    } catch (error) {
+      console.error("Ошибка загрузки leaderboard:", error);
+    }
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-     fetch("https://leaderboard-server-vgia.onrender.com/leaderboard")
-        .then((res) => res.json())
-        .then(setData)
-        .catch((error) => console.error("Ошибка автообновления:", error));
-    }, 5000);
+    loadData();
 
-    return () => clearInterval(interval);
+    const channel = supabase
+      .channel("leaderboard-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "leaderboard" },
+        () => {
+          loadData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const addScore = async () => {
@@ -36,7 +55,7 @@ export default function App() {
     }
 
     try {
-      const response = await fetch("https://leaderboard-server-vgia.onrender.com/add", {
+      const response = await fetch(`${API_URL}/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,20 +128,20 @@ export default function App() {
       </h1>
 
       {!isTvMode && (
-      <div
-  style={{
-    display: "flex",
-    gap: "10px",
-    justifyContent: "center",
-    alignItems: "center",
-    flexWrap: "wrap",
-    marginBottom: "20px",
-    width: "100%",
-    maxWidth: "900px",
-    marginLeft: "auto",
-    marginRight: "auto",
-  }}
->
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            marginBottom: "20px",
+            width: "100%",
+            maxWidth: "900px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
           <input
             type="text"
             placeholder="НИК"
