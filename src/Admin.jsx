@@ -3,6 +3,7 @@ import { useState } from "react";
 const API_URL = "https://leaderboard-server-vgia.onrender.com";
 
 export default function Admin() {
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [authorized, setAuthorized] = useState(false);
 
@@ -10,11 +11,11 @@ export default function Admin() {
   const [amount, setAmount] = useState("");
   const [avatar, setAvatar] = useState("ava1");
 
-  const login = () => {
-    if (password === "1234") {
+  const handleLogin = () => {
+    if (login === "admin" && password === "1234") {
       setAuthorized(true);
     } else {
-      alert("Неверный пароль");
+      alert("Неверный логин или пароль");
     }
   };
 
@@ -24,10 +25,12 @@ export default function Admin() {
       return;
     }
 
-    await fetch(`${API_URL}/add`, {
+    const res = await fetch(`${API_URL}/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-admin-login": login,
+        "x-admin-password": password,
       },
       body: JSON.stringify({
         name: name.trim(),
@@ -35,6 +38,13 @@ export default function Admin() {
         avatar,
       }),
     });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Ошибка");
+      return;
+    }
 
     alert("Добавлено");
     setName("");
@@ -45,9 +55,20 @@ export default function Admin() {
   const reset = async () => {
     if (!confirm("Сбросить таблицу?")) return;
 
-    await fetch(`${API_URL}/reset`, {
+    const res = await fetch(`${API_URL}/reset`, {
       method: "POST",
+      headers: {
+        "x-admin-login": login,
+        "x-admin-password": password,
+      },
     });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Ошибка");
+      return;
+    }
 
     alert("Сброшено");
   };
@@ -58,13 +79,19 @@ export default function Admin() {
         <h2>Админ вход</h2>
 
         <input
+          placeholder="Логин"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+        />
+
+        <input
           type="password"
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={login}>Войти</button>
+        <button onClick={handleLogin}>Войти</button>
       </div>
     );
   }

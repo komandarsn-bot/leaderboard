@@ -5,6 +5,9 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const ADMIN_LOGIN = "admin";
+const ADMIN_PASSWORD = "1234";
+
 const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ";
 
@@ -12,6 +15,18 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 app.use(cors());
 app.use(express.json());
+
+function checkAdmin(req, res) {
+  const adminLogin = req.headers["x-admin-login"];
+  const adminPassword = req.headers["x-admin-password"];
+
+  if (adminLogin !== ADMIN_LOGIN || adminPassword !== ADMIN_PASSWORD) {
+    res.status(401).json({ error: "Нет доступа" });
+    return false;
+  }
+
+  return true;
+}
 
 async function getLeaderboard() {
   const { data, error } = await supabase
@@ -41,6 +56,8 @@ app.get("/leaderboard", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   try {
+    if (!checkAdmin(req, res)) return;
+
     const { name, amount, avatar } = req.body;
 
     if (!name || !amount) {
@@ -88,6 +105,8 @@ app.post("/add", async (req, res) => {
 
 app.post("/reset", async (req, res) => {
   try {
+    if (!checkAdmin(req, res)) return;
+
     const { error } = await supabase
       .from("leaderboard")
       .delete()
