@@ -91,7 +91,7 @@ app.post("/reset", async (req, res) => {
     const { error } = await supabase
       .from("leaderboard")
       .delete()
-      .neq("nickname", "");
+      .gte("points", 0);
 
     if (error) throw error;
 
