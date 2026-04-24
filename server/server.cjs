@@ -126,6 +126,14 @@ app.post("/reset", async (req, res) => {
 
     if (error) throw error;
 
+  await supabase.from("transactions").insert({
+  nickname: "ADMIN",
+  amount: 0,
+  points: 0,
+  avatar: "ava1",
+  action: "reset",
+});
+
     res.json({ ok: true });
   } catch (error) {
     console.error("POST /reset error:", error);
