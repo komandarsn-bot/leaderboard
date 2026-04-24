@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
-const SUPABASE_KEY = "ТВОЙ_КЛЮЧ_СЮДА";
+const SUPABASE_KEY = "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
