@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
 
+const API_URL = "https://leaderboard-server-vgia.onrender.com";
+
 const supabase = createClient(
   "https://jolawvvbcpgnrsvuolkw.supabase.co",
   "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
@@ -11,28 +13,16 @@ export default function MainPage() {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
-    const { data, error } = await supabase
-      .from("leaderboard")
-      .select("*")
-      .order("points", { ascending: false });
-
-    if (!error) {
-      const formatted = data.map((user, index) => ({
-        Место: index + 1,
-        Аватар: user.avatar,
-        НИК: user.nickname,
-        Очков: user.points,
-      }));
-
-      setData(formatted);
-    }
+    const res = await fetch(`${API_URL}/leaderboard`);
+    const json = await res.json();
+    setData(json);
   };
 
   useEffect(() => {
     loadData();
 
     const channel = supabase
-      .channel("leaderboard")
+      .channel("leaderboard-realtime")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "leaderboard" },
@@ -49,32 +39,33 @@ export default function MainPage() {
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center" }}>Таблица лидеров</h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Место</th>
-            <th>Аватар</th>
-            <th>НИК</th>
-            <th>Очков</th>
-          </tr>
-        </thead>
+      {data.length > 0 && (
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Место</th>
+                <th>Аватар</th>
+                <th>НИК</th>
+                <th>Очков</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          {data.map((row, i) => (
-            <tr key={i}>
-              <td>{row["Место"]}</td>
-              <td>
-                <img
-                  src={`/avatars/${row["Аватар"]}.png`}
-                  width="50"
-                />
-              </td>
-              <td>{row["НИК"]}</td>
-              <td>{row["Очков"]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            <tbody>
+              {data.map((row, i) => (
+                <tr key={i}>
+                  <td>{row["Место"]}</td>
+                  <td>
+                    <img src={`/avatars/${row["Аватар"]}.png`} width="50" />
+                  </td>
+                  <td>{row["НИК"]}</td>
+                  <td>{row["Очков"]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
