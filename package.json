@@ -9,15 +9,13 @@
     "start": "concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
-    "concurrently": "^9.2.1",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "xlsx": "^0.18.5"
-    "@supabase/supabase-js": "^2.45.4"
-    
-  },
+  "@supabase/supabase-js": "^2.45.4",
+  "@vitejs/plugin-react": "latest",
+  "vite": "latest",
+  "react": "latest",
+  "react-dom": "latest",
+  "xlsx": "^0.18.5"
+},
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.2.14",
