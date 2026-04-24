@@ -1,47 +1,45 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
+const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const dataFile = path.join(__dirname, "data.json");
+const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
+const SUPABASE_KEY = "ТВОЙ_КЛЮЧ_СЮДА";
 
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-}));
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-app.options("*", cors());
-
+app.use(cors());
 app.use(express.json());
 
-function readData() {
+async function getLeaderboard() {
+  const { data, error } = await supabase
+    .from("leaderboard")
+    .select("*")
+    .order("points", { ascending: false });
+
+  if (error) throw error;
+
+  return data.map((user, index) => ({
+    Место: index + 1,
+    Аватар: user.avatar || "ava1",
+    НИК: user.nickname,
+    Очков: user.points || 0,
+  }));
+}
+
+app.get("/leaderboard", async (req, res) => {
   try {
-    if (!fs.existsSync(dataFile)) {
-      fs.writeFileSync(dataFile, "[]", "utf8");
-    }
-
-    const raw = fs.readFileSync(dataFile, "utf8");
-    return JSON.parse(raw || "[]");
+    const data = await getLeaderboard();
+    res.json(data);
   } catch (error) {
-    console.error("readData error:", error);
-    return [];
+    console.error("GET /leaderboard error:", error);
+    res.status(500).json({ error: "Ошибка сервера" });
   }
-}
-
-function writeData(data) {
-  fs.writeFileSync(dataFile, JSON.stringify(data, null, 2), "utf8");
-}
-
-app.get("/leaderboard", (req, res) => {
-  const data = readData();
-  res.json(data);
 });
 
-app.post("/add", (req, res) => {
+app.post("/add", async (req, res) => {
   try {
     const { name, amount, avatar } = req.body;
 
@@ -49,35 +47,38 @@ app.post("/add", (req, res) => {
       return res.status(400).json({ error: "Нет имени или суммы" });
     }
 
-    const points = Math.floor(Number(amount) / 10);
-    let data = readData();
+    const nickname = String(name).trim();
+    const pointsToAdd = Math.floor(Number(amount) / 10);
 
-    const existing = data.find(
-      (user) => user["НИК"].toLowerCase() === String(name).trim().toLowerCase()
-    );
+    const { data: existing, error: findError } = await supabase
+      .from("leaderboard")
+      .select("*")
+      .eq("nickname", nickname)
+      .maybeSingle();
+
+    if (findError) throw findError;
 
     if (existing) {
-      existing["Очков"] = Number(existing["Очков"]) + points;
-      if (!existing["Аватар"]) {
-        existing["Аватар"] = avatar || "ava1";
-      }
+      const { error } = await supabase
+        .from("leaderboard")
+        .update({
+          points: Number(existing.points) + pointsToAdd,
+          avatar: existing.avatar || avatar || "ava1",
+        })
+        .eq("id", existing.id);
+
+      if (error) throw error;
     } else {
-      data.push({
-        Место: 0,
-        Аватар: avatar || "ava1",
-        НИК: String(name).trim(),
-        Очков: points
+      const { error } = await supabase.from("leaderboard").insert({
+        nickname,
+        avatar: avatar || "ava1",
+        points: pointsToAdd,
       });
+
+      if (error) throw error;
     }
 
-    data.sort((a, b) => Number(b["Очков"]) - Number(a["Очков"]));
-
-    data = data.map((user, index) => ({
-      ...user,
-      Место: index + 1
-    }));
-
-    writeData(data);
+    const data = await getLeaderboard();
     res.json(data);
   } catch (error) {
     console.error("POST /add error:", error);
@@ -85,9 +86,15 @@ app.post("/add", (req, res) => {
   }
 });
 
-app.post("/reset", (req, res) => {
+app.post("/reset", async (req, res) => {
   try {
-    writeData([]);
+    const { error } = await supabase
+      .from("leaderboard")
+      .delete()
+      .neq("nickname", "");
+
+    if (error) throw error;
+
     res.json({ ok: true });
   } catch (error) {
     console.error("POST /reset error:", error);
