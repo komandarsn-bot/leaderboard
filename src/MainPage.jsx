@@ -10,7 +10,7 @@ const supabase = createClient(
   "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
 );
 
-export default function App() {
+export default function MainPage() {
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
