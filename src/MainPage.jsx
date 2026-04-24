@@ -4,7 +4,7 @@ import "./index.css";
 
 const supabase = createClient(
   "https://jolawvvbcpgnrsvuolkw.supabase.co",
-  "ТВОЙ_ПУБЛИЧНЫЙ_КЛЮЧ"
+  "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ"
 );
 
 export default function MainPage() {
