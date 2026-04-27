@@ -37,9 +37,9 @@ export default function History() {
           <tr>
             <th>Дата</th>
             <th>НИК</th>
-            <th>Сумма</th>
+            <th>Сумма</th>ы
             <th>Очки</th>
-            <th>Аватар</th>
+            <th>Уровень</th>
           </tr>
         </thead>
 
