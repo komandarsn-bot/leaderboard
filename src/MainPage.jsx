@@ -83,11 +83,18 @@ export default function MainPage() {
                 <div className="name">{row["НИК"]}</div>
               </div>
 
-              <div className="lvl">{level.level}</div>
+             <div className="level-box">
+              <span>LEVEL</span>
+              <strong>{level.level}</strong>
+            </div>
 
-              <div className="xp-text">{level.text}</div>
+            <div className="xp">{xp} XP</div>
 
-              <div className="progress-block">
+            <div className="progress-block">
+
+
+
+
                 <div className="bar">
                   <div
                     className="fill"
