@@ -62,7 +62,7 @@ export default function MainPage() {
 
   return (
     <div className="page">
-      <h1 className="title">Таблица лидеров</h1>
+      <h1 className="title">Leaderboard</h1>
 
       <div className="card">
         {data.map((row, index) => {
@@ -85,7 +85,7 @@ export default function MainPage() {
 
               <div className="lvl">{level.level}</div>
 
-              <div className="xp">{xp} XP</div>
+              <div className="xp-text">{level.text}</div>
 
               <div className="progress-block">
                 <div className="bar">

@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+}
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -8,9 +17,11 @@ body {
 /* Заголовок */
 .title {
   text-align: center;
-  font-size: 42px;
-  margin: 40px 0;
+  font-size: 48px;
+  margin: 50px 0;
   font-weight: 800;
+  letter-spacing: -1px;
+
   background: linear-gradient(90deg, #a78bfa, #22d3ee);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -65,12 +76,8 @@ body {
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 16px;
-  object-fit: cover;
-  box-shadow: 0 0 20px rgba(139,92,246,0.6);
-  transition: 0.3s;
+  box-shadow: 0 0 25px rgba(139,92,246,0.6),
+              0 0 50px rgba(34,211,238,0.2);
 }
 
 .avatar:hover {
@@ -78,8 +85,9 @@ body {
 }
 
 .name {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
+  letter-spacing: -0.3px;
 }
 
 /* Уровень */
@@ -93,7 +101,9 @@ body {
 
 /* XP */
 .xp {
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 16px;
+  color: #cbd5f5;
 }
 
 /* Прогресс */
@@ -119,6 +129,6 @@ body {
 }
 
 .xp-text {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 13px;
+  color: #94a3b8;
 }
