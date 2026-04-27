@@ -177,6 +177,11 @@ body {
 }
 
 .progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  max-width: 260px;   /* ограничили ширину */
   margin-left: auto;
   margin-right: auto;
 }
