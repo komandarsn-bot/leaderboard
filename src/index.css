@@ -41,7 +41,8 @@ body {
 /* Строка */
 .row {
   display: grid;
-  grid-template-columns: 80px 300px 120px 150px 1fr;
+  grid-template-columns: 80px minmax(260px, 1.4fr) 150px 180px 1.8fr;
+  column-gap: 28px;
   align-items: center;
   padding: 18px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -150,6 +151,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 110px;
+  min-width: 110px;
 
   background: rgba(139, 92, 246, 0.15);
   border: 1px solid rgba(139, 92, 246, 0.3);
