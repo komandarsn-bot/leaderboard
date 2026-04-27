@@ -44,6 +44,7 @@ body {
   grid-template-columns: 80px minmax(260px, 1.4fr) 150px 180px 1.8fr;
   column-gap: 28px;
   align-items: center;
+  justify-content: center;
   padding: 18px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -124,6 +125,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  max-width: 260px;   /* ограничили ширину */
 }
 
 .bar {
@@ -171,4 +174,9 @@ body {
 .level-box strong {
   font-size: 18px;
   color: #a78bfa;
+}
+
+.progress-block {
+  margin-left: auto;
+  margin-right: auto;
 }
