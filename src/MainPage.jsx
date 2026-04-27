@@ -11,11 +11,18 @@ const supabase = createClient(
 
 export default function MainPage() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
-    const res = await fetch(`${API_URL}/leaderboard`);
-    const json = await res.json();
-    setData(json);
+    try {
+      const res = await fetch(`${API_URL}/leaderboard`);
+      const json = await res.json();
+      setData(json);
+    } catch (error) {
+      console.error("Ошибка загрузки leaderboard:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -39,7 +46,19 @@ export default function MainPage() {
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center" }}>Таблица лидеров</h1>
 
-      {data.length > 0 && (
+      {loading && (
+        <p style={{ textAlign: "center", fontSize: "20px" }}>
+          Загружаем таблицу...
+        </p>
+      )}
+
+      {!loading && data.length === 0 && (
+        <p style={{ textAlign: "center", fontSize: "20px" }}>
+          Пока нет игроков
+        </p>
+      )}
+
+      {!loading && data.length > 0 && (
         <div className="table-wrap">
           <table>
             <thead>
