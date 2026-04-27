@@ -1,277 +1,124 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #f8fafc, #e0f2fe);
-  color: #1e293b;
-}
-
-.page {
-  min-height: 100vh;
-  padding: 32px 16px;
-}
-
-.container {
-  max-width: 1250px;
-  margin: 0 auto;
-}
-
-.hero {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  margin-bottom: 20px;
-}
-
-.hero h1 {
-  margin: 0 0 8px;
-  font-size: 36px;
-}
-
-.hero p {
-  margin: 0;
-  color: #475569;
-  font-size: 16px;
-}
-
-.panel {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 22px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  margin-bottom: 20px;
-}
-
-.toolbar {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.upload-btn {
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
-  padding: 12px 18px;
-  border-radius: 14px;
-  cursor: pointer;
-  font-weight: 700;
-  border: none;
-  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.28);
-  transition: 0.2s ease;
 }
 
-.upload-btn:hover {
-  transform: translateY(-1px);
-}
-
-.upload-btn input {
-  display: none;
-}
-
-.search-input {
-  flex: 1;
-  min-width: 260px;
-  padding: 12px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 14px;
-  font-size: 15px;
-  outline: none;
-  background: white;
-}
-
-.search-input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
-}
-
-.info-row {
-  margin-top: 14px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  background: #eff6ff;
-  color: #1e3a8a;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.table-card {
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 24px;
-  padding: 18px;
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.1);
-}
-
-.table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 18px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  overflow: hidden;
-  table-layout: fixed;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background: linear-gradient(135deg, #1d4ed8, #4338ca);
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 14px 10px;
+/* Заголовок */
+.title {
   text-align: center;
-  cursor: pointer;
-  white-space: normal;
-  word-break: break-word;
-  border: 1px solid #304766;
+  font-size: 42px;
+  margin: 40px 0;
+  font-weight: 800;
+  background: linear-gradient(90deg, #a78bfa, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.th-content {
-  display: flex;
-  justify-content: center;
+/* Карточка */
+.card {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.2);
+}
+
+/* Строка */
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 150px 1.5fr;
   align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.row:hover {
+  background: rgba(255,255,255,0.03);
+  transform: scale(1.01);
+}
+
+/* Место */
+.place {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.place-1 { background: gold; color: black; }
+.place-2 { background: silver; color: black; }
+.place-3 { background: #cd7f32; }
+
+/* Игрок */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(139,92,246,0.6);
+  transition: 0.3s;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Уровень */
+.lvl {
+  background: rgba(139,92,246,0.2);
+  padding: 10px 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* XP */
+.xp {
+  font-weight: bold;
+}
+
+/* Прогресс */
+.progress-block {
+  display: flex;
+  flex-direction: column;
   gap: 6px;
 }
 
-th,
-td {
-  font-size: 20px;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #304766;
+.bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.sort-icon {
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a78bfa, #22d3ee);
+  border-radius: 999px;
+  transition: 0.5s ease;
+}
+
+.xp-text {
   font-size: 12px;
-  opacity: 0.9;
-}
-
-tbody tr {
-  transition: background 0.15s ease;
-}
-
-tbody tr:nth-child(even) {
-  background: #f8fafc;
-}
-
-tbody tr:hover {
-  background: #e0e7ff;
-}
-
-td {
-  padding: 14px 10px;
-  color: #1e293b;
-  word-break: break-word;
-}
-
-td:nth-child(3) {
-  font-family: "Pacifico", cursive;
-}
-
-.empty-state {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 22px;
-  padding: 40px 20px;
-  text-align: center;
-  color: #64748b;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-}
-
-@media (min-width: 1200px) {
-  table {
-    font-size: 24px;
-  }
-
-  th,
-  td {
-    padding: 18px 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 28px;
-  }
-
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-input {
-    width: 100%;
-  }
-
-  .table-wrap {
-    width: 100%;
-    overflow-x: hidden;
-    padding: 4px;
-  }
-
-  table {
-    width: 100%;
-    min-width: 100%;
-    table-layout: fixed;
-    font-size: 14px !important;
-  }
-
-  th,
-  td {
-    font-size: 14px !important;
-    padding: 8px 4px !important;
-    text-align: center;
-    vertical-align: middle;
-    word-break: break-word;
-  }
-
-  thead th {
-    font-size: 13px !important;
-    padding: 8px 4px !important;
-  }
-
-  h1 {
-    font-size: 28px !important;
-    line-height: 1.2;
-  }
-
-  input,
-  select,
-  button {
-    width: 100%;
-    max-width: 100%;
-    font-size: 16px !important;
-    box-sizing: border-box;
-  }
-
-  img {
-    width: 48px !important;
-    height: 48px !important;
-    max-width: 48px !important;
-    object-fit: cover;
-  }
-
-  td:nth-child(3) {
-    font-family: "Pacifico", cursive;
-    font-size: 13px !important;
-  }
+  opacity: 0.7;
 }
