@@ -9,7 +9,6 @@ export default function Admin() {
 
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const [avatar, setAvatar] = useState("ava1");
 
   const handleLogin = () => {
     if (login === "admin" && password === "1234") {
@@ -35,7 +34,6 @@ export default function Admin() {
       body: JSON.stringify({
         name: name.trim(),
         amount,
-        avatar,
       }),
     });
 
@@ -49,7 +47,6 @@ export default function Admin() {
     alert("Добавлено");
     setName("");
     setAmount("");
-    setAvatar("ava1");
   };
 
   const reset = async () => {
@@ -108,16 +105,10 @@ export default function Admin() {
 
       <input
         type="number"
-        placeholder="Сумма"
+        placeholder="Сумма (тг)"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
-
-      <select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
-        <option value="ava1">ava1</option>
-        <option value="ava2">ava2</option>
-        <option value="ava3">ava3</option>
-      </select>
 
       <button onClick={addUser}>Добавить</button>
       <button onClick={reset}>Сбросить всё</button>

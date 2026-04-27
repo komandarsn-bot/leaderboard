@@ -28,6 +28,31 @@ function checkAdmin(req, res) {
   return true;
 }
 
+function getLevel(xp) {
+  if (xp < 100) return 1;
+  if (xp < 200) return 2;
+  if (xp < 300) return 3;
+  if (xp < 400) return 4;
+  if (xp < 500) return 5;
+
+  if (xp < 650) return 6;
+  if (xp < 800) return 7;
+  if (xp < 950) return 8;
+  if (xp < 1100) return 9;
+  if (xp < 1250) return 10;
+
+  if (xp < 1500) return 11;
+  if (xp < 1750) return 12;
+  if (xp < 2000) return 13;
+  if (xp < 2250) return 14;
+
+  return 15;
+}
+
+function getAvatarByXp(xp) {
+  return `${getLevel(xp)} уровень`;
+}
+
 async function getLeaderboard() {
   const { data, error } = await supabase
     .from("leaderboard")
@@ -38,9 +63,9 @@ async function getLeaderboard() {
 
   return data.map((user, index) => ({
     Место: index + 1,
-    Аватар: user.avatar || "ava1",
+    Аватар: user.avatar || "1 уровень",
     НИК: user.nickname,
-    Очков: user.points || 0,
+    XP: user.points || 0,
   }));
 }
 
@@ -58,14 +83,20 @@ app.post("/add", async (req, res) => {
   try {
     if (!checkAdmin(req, res)) return;
 
-    const { name, amount, avatar } = req.body;
+    const { name, amount } = req.body;
 
     if (!name || !amount) {
       return res.status(400).json({ error: "Нет имени или суммы" });
     }
 
     const nickname = String(name).trim();
-    const pointsToAdd = Math.floor(Number(amount) / 10);
+
+    const rawXp = Math.floor(Number(amount) / 150);
+    const pointsToAdd = Math.min(rawXp, 300);
+
+    if (pointsToAdd <= 0) {
+      return res.status(400).json({ error: "Сумма слишком маленькая" });
+    }
 
     const { data: existing, error: findError } = await supabase
       .from("leaderboard")
@@ -75,12 +106,16 @@ app.post("/add", async (req, res) => {
 
     if (findError) throw findError;
 
+    let totalXp = pointsToAdd;
+
     if (existing) {
+      totalXp = Number(existing.points || 0) + pointsToAdd;
+
       const { error } = await supabase
         .from("leaderboard")
         .update({
-          points: Number(existing.points) + pointsToAdd,
-          avatar: existing.avatar || avatar || "ava1",
+          points: totalXp,
+          avatar: getAvatarByXp(totalXp),
         })
         .eq("id", existing.id);
 
@@ -88,7 +123,7 @@ app.post("/add", async (req, res) => {
     } else {
       const { error } = await supabase.from("leaderboard").insert({
         nickname,
-        avatar: avatar || "ava1",
+        avatar: getAvatarByXp(pointsToAdd),
         points: pointsToAdd,
       });
 
@@ -101,7 +136,7 @@ app.post("/add", async (req, res) => {
         nickname,
         amount: Number(amount),
         points: pointsToAdd,
-        avatar: avatar || "ava1",
+        avatar: getAvatarByXp(totalXp),
         action: "add",
       });
 
@@ -126,13 +161,13 @@ app.post("/reset", async (req, res) => {
 
     if (error) throw error;
 
-  await supabase.from("transactions").insert({
-  nickname: "ADMIN",
-  amount: 0,
-  points: 0,
-  avatar: "ava1",
-  action: "reset",
-});
+    await supabase.from("transactions").insert({
+      nickname: "ADMIN",
+      amount: 0,
+      points: 0,
+      avatar: "1 уровень",
+      action: "reset",
+    });
 
     res.json({ ok: true });
   } catch (error) {
