@@ -39,7 +39,7 @@ export default function History() {
             <th>НИК</th>
             <th>Сумма</th>ы
             <th>Очки</th>
-            <th>Уровень</th>
+            <th>Очки</th>
           </tr>
         </thead>
 

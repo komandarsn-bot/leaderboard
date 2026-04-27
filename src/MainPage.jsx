@@ -108,7 +108,7 @@ export default function MainPage() {
       {!loading && data.length > 0 && (
         <div
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1500px",
             margin: "0 auto",
             background: "white",
             borderRadius: "20px",
@@ -121,6 +121,7 @@ export default function MainPage() {
             style={{
               width: "100%",
               borderCollapse: "collapse",
+              tableLayout: "fixed",
               fontSize: "17px",
             }}
           >
@@ -188,17 +189,23 @@ export default function MainPage() {
                           src={`/avatars/${row["Аватар"]}.png`}
                           alt="avatar"
                           style={{
-                            width: "90px",
-                            height: "90px",
+                            width: "110px",
+                            height: "110px",
                             borderRadius: "18px",
                             objectFit: "cover",
                             boxShadow: "0 6px 16px rgba(15,23,42,0.18)",
                           }}
                         />
 
-                        <strong style={{ fontSize: "20px" }}>
-                          {row["НИК"]}
-                        </strong>
+                        <strong
+        style={{
+         fontSize: "20px",
+         whiteSpace: "nowrap",
+         wordBreak: "keep-all",
+           }}
+          >
+           {row["НИК"]}
+            </strong>
                       </div>
                     </td>
 
