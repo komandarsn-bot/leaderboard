@@ -65,7 +65,7 @@ async function getLeaderboard() {
     Место: index + 1,
     Аватар: user.avatar || "1 уровень",
     НИК: user.nickname,
-    XP: user.points || 0,
+    Очков: user.points || 0,
   }));
 }
 
