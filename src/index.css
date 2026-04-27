@@ -41,11 +41,10 @@ body {
 /* Строка */
 .row {
   display: grid;
-  grid-template-columns: 80px 1fr 120px 150px 1.5fr;
+  grid-template-columns: 80px 300px 120px 150px 1fr;
   align-items: center;
   padding: 18px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: 0.3s;
 }
 
 .row:hover {
@@ -73,11 +72,24 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
+
+  max-width: 300px; /* ограничиваем */
+  overflow: hidden;
 }
 
 .avatar {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+
+  border-radius: 16px;
+  object-fit: cover;
+
   box-shadow: 0 0 25px rgba(139,92,246,0.6),
               0 0 50px rgba(34,211,238,0.2);
+
+  transition: 0.3s;
 }
 
 .avatar:hover {
