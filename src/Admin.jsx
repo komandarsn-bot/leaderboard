@@ -33,30 +33,25 @@ const handleLogin = async () => {
     return;
   }
 
-  const res = await fetch(`${API_URL}/admin-check`, {
-    method: "POST",
-    headers: {
-      "x-admin-login": login,
-      "x-admin-password": password,
-    },
-  });
+  try {
+    const res = await fetch(`${API_URL}/admin-check`, {
+      method: "POST",
+      headers: {
+        "x-admin-login": login,
+        "x-admin-password": password,
+      },
+    });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    // 👉 проверка на русскую раскладку
-    const hasCyrillic = /[а-яА-Я]/.test(password);
-
-    if (hasCyrillic) {
-      alert("Похоже, включена русская раскладка");
-    } else {
-      alert(data.error || "Неверный логин или пароль");
+    // ❗ НЕ парсим json сразу
+    if (!res.ok) {
+      alert("Неверный логин или пароль");
+      return;
     }
 
-    return;
+    setAuthorized(true);
+  } catch (err) {
+    alert("Ошибка соединения");
   }
-
-  setAuthorized(true);
 };
 
   const addUser = async () => {
