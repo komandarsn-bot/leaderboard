@@ -97,7 +97,10 @@ export default function MainPage() {
               </div>
 
               <div className="player">
-                <img src={`/avatars/1 уровень.png`} className="avatar" />
+               <img
+                 src={`/avatars/${Math.min(level.level, 15)}.png`}
+                 className="avatar"
+                />
 
                 <div className="player-info">
                   <div className="name">{row["НИК"]}</div>
@@ -133,7 +136,10 @@ export default function MainPage() {
           </div>
 
           <div className="player">
-            <img src={`/avatars/1 уровень.png`} className="avatar" />
+           <img
+  src={`/avatars/${Math.min(level.level, 15)}.png`}
+  className="avatar"
+/>
 
             <div className="player-info">
               <div className="name">{row["НИК"]}</div>
