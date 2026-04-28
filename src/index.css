@@ -197,20 +197,76 @@ body {
   row-gap: 24px;
   justify-content: center;
 }
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (max-width: 700px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .top-wrapper {
+    min-height: auto;
+    padding: 24px 12px 40px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
   .grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 160px);
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .row {
+    width: 160px;
+    min-height: 240px;
+    padding: 18px 12px 14px;
+    border-radius: 16px;
+  }
+
+  .place {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .avatar {
+    width: 105px;
+    height: 105px;
+    min-width: 105px;
+    min-height: 105px;
+  }
+
+  .name {
+    font-size: 17px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .level-text {
+    font-size: 13px;
+  }
+
+  .bar {
+    height: 12px;
+  }
+
+  .xp-text {
+    font-size: 12px;
+  }
+
+  .rest {
+    margin-top: 20px;
+    padding-bottom: 40px;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 380px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 160px;
   }
 }
