@@ -5,8 +5,8 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const ADMIN_LOGIN = "admin";
-const ADMIN_PASSWORD = "1234";
+const ADMIN_LOGIN = "Admin";
+const ADMIN_PASSWORD = "Skillset";
 
 const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ";

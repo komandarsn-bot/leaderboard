@@ -27,7 +27,7 @@ export default function Admin() {
   }, []);
 
   const handleLogin = () => {
-    if (login === "admin" && password === "Skillset") {
+    if (login === "Admin" && password === "Skillset") {
       setAuthorized(true);
     } else {
       alert("Неверный логин или пароль");
