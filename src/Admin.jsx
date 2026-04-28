@@ -168,9 +168,6 @@ export default function Admin() {
   Сбросить всё
 </button>
 
-          <button className="admin-button danger" onClick={reset}>
-            Сбросить всё
-          </button>
         </div>
       </div>
     </div>
