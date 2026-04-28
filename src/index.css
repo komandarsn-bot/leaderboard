@@ -486,24 +486,25 @@ body {
 @media (max-width: 600px) {
   .history-page {
     padding: 20px 12px;
+    overflow-x: hidden;
   }
 
   .history-card {
+    width: 100%;
+    box-sizing: border-box;
     padding: 20px;
     border-radius: 20px;
   }
 
-  .history-title {
-    font-size: 26px;
-  }
-
-  .history-subtitle {
-    font-size: 14px;
-  }
-
   .history-table-wrap {
-    border: none;
+    width: 100%;
     overflow: visible;
+    border: none;
+  }
+
+  .history-table {
+    width: 100%;
+    min-width: 0;
   }
 
   .history-table,
@@ -520,6 +521,8 @@ body {
   }
 
   .history-table tr {
+    width: 100%;
+    box-sizing: border-box;
     margin-bottom: 14px;
     padding: 14px;
     border-radius: 16px;
@@ -532,31 +535,8 @@ body {
     border: none;
     display: flex;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
     font-size: 14px;
-  }
-
-  .history-table td:nth-child(1)::before {
-    content: "Дата";
-    color: #94a3b8;
-  }
-
-  .history-table td:nth-child(2)::before {
-    content: "Ник";
-    color: #94a3b8;
-  }
-
-  .history-table td:nth-child(3)::before {
-    content: "Сумма";
-    color: #94a3b8;
-  }
-
-  .history-table td:nth-child(4)::before {
-    content: "XP";
-    color: #94a3b8;
-  }
-
-  .history-table td {
     text-align: right;
   }
 }
