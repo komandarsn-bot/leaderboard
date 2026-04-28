@@ -28,14 +28,18 @@ body {
 
 /* Строка */
 .row {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: 20px;
-  border-radius: 18px;
-  background: rgba(15, 23, 42, 0.6);
+  width: 180px;
+  min-height: 240px;
+  padding: 24px 18px 18px;
 
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.65);
   transition: 0.3s;
 }
 
@@ -45,12 +49,38 @@ body {
 
 /* Место */
 .place {
-  margin-bottom: 10px;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  background: rgba(255,255,255,0.12); /* 👈 это для 4,5,6 и дальше */
+  color: white;
+
+.place-1 {
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #111827;
 }
 
-.place-1 { background: gold; color: black; }
-.place-2 { background: silver; color: black; }
-.place-3 { background: #cd7f32; }
+.place-2 {
+  background: linear-gradient(135deg, #e5e7eb, #94a3b8);
+  color: #111827;
+}
+
+.place-3 {
+  background: linear-gradient(135deg, #fb923c, #92400e);
+  color: white;
+}
 
 /* Игрок */
 .player {
