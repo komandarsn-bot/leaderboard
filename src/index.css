@@ -272,16 +272,3 @@ body {
     padding-bottom: 40px;
   }
 }
-
-@media (max-width: 700px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(2, 1fr));
-    justify-content: center;
-    gap: 14px;
-    padding: 0 10px;
-  }
-
-  .row {
-    max-width: 100%;
-  }
-}
