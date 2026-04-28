@@ -55,9 +55,6 @@ body {
   border: 1px solid rgba(167,139,250,0.4);
   box-shadow: 0 15px 40px rgba(139,92,246,0.3);
 }
-.row:first-child {
-  transform: scale(1.05);
-}
 
 /* Место */
 .place {
@@ -83,7 +80,6 @@ body {
 .place-1 {
   background: linear-gradient(135deg, #facc15, #f97316);
   color: #111827;
-  box-shadow: 0 0 15px rgba(250, 204, 21, 0.7);
 }
 
 .place-2 {
