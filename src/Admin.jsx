@@ -40,8 +40,18 @@ const handleLogin = async () => {
     },
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    alert("Неверный логин или пароль");
+    // 👉 проверка на русскую раскладку
+    const hasCyrillic = /[а-яА-Я]/.test(password);
+
+    if (hasCyrillic) {
+      alert("Похоже, включена русская раскладка");
+    } else {
+      alert(data.error || "Неверный логин или пароль");
+    }
+
     return;
   }
 
