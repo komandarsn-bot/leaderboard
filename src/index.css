@@ -540,3 +540,18 @@ body {
     text-align: right;
   }
 }
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE/старые */
+body {
+  -ms-overflow-style: none;
+}
