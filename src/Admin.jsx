@@ -27,12 +27,13 @@ export default function Admin() {
   }, []);
 
   const handleLogin = () => {
-    if (login === "Admin" && password === "Skillset") {
-      setAuthorized(true);
-    } else {
-      alert("Неверный логин или пароль");
-    }
-  };
+  if (!login || !password) {
+    alert("Введите логин и пароль");
+    return;
+  }
+
+  setAuthorized(true);
+};
 
   const addUser = async () => {
     if (!name.trim() || !amount) {

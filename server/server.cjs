@@ -5,8 +5,11 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const ADMIN_LOGIN = "Admin";
-const ADMIN_PASSWORD = "Skillset";
+const ADMIN_LOGIN = process.env.ADMIN_LOGIN;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+if (!ADMIN_LOGIN || !ADMIN_PASSWORD) {
+  console.error("ADMIN_LOGIN или ADMIN_PASSWORD не заданы в Render Environment");
+}
 
 const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ";
