@@ -77,7 +77,7 @@ export default function MainPage() {
 
   return (
     <div className="page">
-      <h1 className="title">Leaderboard</h1>
+
 
       <div className="card grid">
         {loading && (
