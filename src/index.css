@@ -216,7 +216,8 @@ body {
 
   .top-wrapper {
     min-height: auto;
-    padding: 24px 12px 40px;
+    display: block;
+    padding: 24px 0 40px;
   }
 
   .card {
@@ -224,12 +225,24 @@ body {
   }
 
   .grid {
-    grid-template-columns: repeat(2, 1fr); /* 👈 ключевой фикс */
+    width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
-    justify-content: center;
     padding: 0 10px;
   }
 
+  .row {
+    width: 100%;
+    max-width: none;
+  }
+
+  .rest {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding-bottom: 40px;
+  }
 
   .place {
     width: 32px;
@@ -260,10 +273,5 @@ body {
 
   .xp-text {
     font-size: 12px;
-  }
-
-  .rest {
-    margin-top: 20px;
-    padding-bottom: 40px;
   }
 }
