@@ -208,6 +208,7 @@ body {
   gap: 20px;
   justify-content: center;
 }
+
 @media (max-width: 700px) {
   body {
     overflow-x: hidden;
@@ -223,16 +224,16 @@ body {
   }
 
   .grid {
-    grid-template-columns: repeat(2, 160px);
+    grid-template-columns: repeat(2, 1fr); /* 👈 ключевой фикс */
     gap: 14px;
     justify-content: center;
+    padding: 0 10px;
   }
 
   .row {
-    width: 160px;
-    min-height: 240px;
-    padding: 18px 12px 14px;
-    border-radius: 16px;
+    width: 100%;
+    max-width: 180px;
+    margin: 0 auto; /* 👈 центр каждой карточки */
   }
 
   .place {
@@ -262,8 +263,6 @@ body {
     font-size: 13px;
   }
 
-
-
   .xp-text {
     font-size: 12px;
   }
@@ -283,6 +282,6 @@ body {
   }
 
   .row {
-    max-width: 100%; /* 👈 убирает вылезание */
+    max-width: 100%;
   }
 }
