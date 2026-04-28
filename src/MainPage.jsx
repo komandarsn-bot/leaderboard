@@ -88,13 +88,9 @@ export default function MainPage() {
               <strong>{level.level}</strong>
             </div>
 
-            <div className="xp">{xp} XP</div>
+           
 
             <div className="progress-block">
-
-
-
-
                 <div className="bar">
                   <div
                     className="fill"
