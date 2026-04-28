@@ -80,50 +80,81 @@ export default function MainPage() {
     <div className="page">
 
 
-      <div className="card grid">
-        {loading && (
-          <div className="loading">
-            {error || "Загрузка таблицы..."}
-          </div>
-        )}
+     <div className="card">
 
-        {!loading &&
-          top10.map((row, index) => {
-            const xp = Number(row["Очков"]) || 0;
-            const level = getLevelInfo(xp);
+  {/* ТОП 10 */}
+  <div className="top-wrapper">
+    <div className="grid">
+      {!loading &&
+        top10.map((row, index) => {
+          const xp = Number(row["Очков"]) || 0;
+          const level = getLevelInfo(xp);
 
-            return (
-              <div className="row" key={index}>
-                <div className={`place place-${index + 1}`}>
-                  {row["Место"]}
-                </div>
+          return (
+            <div className="row" key={index}>
+              <div className={`place place-${index + 1}`}>
+                {row["Место"]}
+              </div>
 
-                <div className="player">
-  <img
-    src={`/avatars/1 уровень.png`}
-    className="avatar"
-  />
+              <div className="player">
+                <img src={`/avatars/1 уровень.png`} className="avatar" />
 
-  <div className="player-info">
-    <div className="name">{row["НИК"]}</div>
-    <div className="level-text">Level {level.level}</div>
-  </div>
-</div>
-
-                <div className="progress-block">
-                  <div className="bar">
-                    <div
-                      className="fill"
-                      style={{ width: `${level.percent}%` }}
-                    />
-                  </div>
-
-                  <div className="xp-text">{level.text}</div>
+                <div className="player-info">
+                  <div className="name">{row["НИК"]}</div>
+                  <div className="level-text">Level {level.level}</div>
                 </div>
               </div>
-            );
-          })}
-      </div>
+
+              <div className="progress-block">
+                <div className="bar">
+                  <div
+                    className="fill"
+                    style={{ width: `${level.percent}%` }}
+                  />
+                </div>
+                <div className="xp-text">{level.text}</div>
+              </div>
+            </div>
+          );
+        })}
     </div>
+  </div>
+
+  {/* ОСТАЛЬНЫЕ */}
+  <div className="grid rest">
+    {rest.map((row, index) => {
+      const xp = Number(row["Очков"]) || 0;
+      const level = getLevelInfo(xp);
+
+      return (
+        <div className="row" key={index}>
+          <div className={`place place-${index + 11}`}>
+            {row["Место"]}
+          </div>
+
+          <div className="player">
+            <img src={`/avatars/1 уровень.png`} className="avatar" />
+
+            <div className="player-info">
+              <div className="name">{row["НИК"]}</div>
+              <div className="level-text">Level {level.level}</div>
+            </div>
+          </div>
+
+          <div className="progress-block">
+            <div className="bar">
+              <div
+                className="fill"
+                style={{ width: `${level.percent}%` }}
+              />
+            </div>
+            <div className="xp-text">{level.text}</div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+</div>
   );
 }
