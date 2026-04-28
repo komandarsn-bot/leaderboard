@@ -77,7 +77,7 @@ export default function MainPage() {
 
               <div className="player">
                 <img
-                  src={`/avatars/${row["Аватар"]}.png`}
+                  src={`/avatars/1 уровень.png`}
                   className="avatar"
                 />
                 <div className="name">{row["НИК"]}</div>
