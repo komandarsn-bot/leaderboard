@@ -34,7 +34,7 @@ body {
   align-items: center;
 
   width: 180px;
-  min-height: 240px;
+  min-height: 280px;
   padding: 24px 18px 18px;
 
   border-radius: 18px;
@@ -90,19 +90,19 @@ body {
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
-  min-width: 80px;
-  min-height: 80px;
+  width: 110px;
+  height: 110px;
+  min-width: 110px;
+  min-height: 110px;
 
-  object-fit: contain; /* ВАЖНО для прозрачных PNG */
+  object-fit: contain;
 
-  border-radius: 0; /* убрали рамку */
-  box-shadow: none; /* убрали свечение */
+  border-radius: 0;
+  box-shadow: none;
 
-  background: transparent; /* чтобы не было фона */
+  background: transparent;
   transition: 0.3s;
-  transform: scale(1.1);
+
   filter: drop-shadow(0 0 10px rgba(217, 215, 223, 0.6));
 }
 
