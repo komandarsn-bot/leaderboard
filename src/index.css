@@ -100,7 +100,7 @@ body {
   background: transparent;
   transition: 0.3s;
 
-  filter: drop-shadow(0 0 50px rgba(217, 215, 223, 0.6));
+  filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.6));
 }
 
 
