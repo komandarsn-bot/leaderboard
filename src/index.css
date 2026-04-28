@@ -477,3 +477,8 @@ body {
     font-size: 28px;
   }
 }
+
+.admin-button.history {
+  background: linear-gradient(90deg, #334155, #0f766e);
+  box-shadow: 0 12px 30px rgba(20,184,166,0.18);
+}

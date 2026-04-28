@@ -157,6 +157,17 @@ export default function Admin() {
             Добавить очки
           </button>
 
+          <button
+  className="admin-button history"
+  onClick={() => window.location.href = "/admin/history"}
+>
+  История
+</button>
+
+<button className="admin-button danger" onClick={reset}>
+  Сбросить всё
+</button>
+
           <button className="admin-button danger" onClick={reset}>
             Сбросить всё
           </button>
