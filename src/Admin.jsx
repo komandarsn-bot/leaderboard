@@ -48,7 +48,8 @@ const handleLogin = async () => {
       return;
     }
 
-    setAuthorized(true);
+    sessionStorage.setItem("admin-auth", "true");
+setAuthorized(true);
   } catch (err) {
     alert("Неверный логин или пароль");
   }

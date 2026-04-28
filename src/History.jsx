@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
+import { useNavigate } from "react-router-dom";
 
 const supabase = createClient(
   "https://jolawvvbcpgnrsvuolkw.supabase.co",
@@ -25,9 +26,18 @@ export default function History() {
     setItems(data || []);
   };
 
-  useEffect(() => {
-    loadHistory();
-  }, []);
+const navigate = useNavigate();
+
+useEffect(() => {
+  const isAuth = sessionStorage.getItem("admin-auth");
+
+  if (isAuth !== "true") {
+    navigate("/admin");
+    return;
+  }
+
+  loadHistory();
+}, [navigate]);
 
   return (
     <div className="history-page">
