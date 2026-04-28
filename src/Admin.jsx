@@ -6,6 +6,7 @@ const API_URL = "https://leaderboard-server-vgia.onrender.com";
 export default function Admin() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [authorized, setAuthorized] = useState(false);
 
   const [name, setName] = useState("");
@@ -128,13 +129,23 @@ const handleLogin = async () => {
               onChange={(e) => setLogin(e.target.value)}
             />
 
-            <input
-              className="admin-input"
-              type="password"
-              placeholder="Пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div className="password-wrapper">
+  <input
+    className="admin-input"
+    type={showPassword ? "text" : "password"}
+    placeholder="Пароль"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+
+  <button
+    type="button"
+    className="show-password"
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? "🙈" : "👁"}
+  </button>
+</div>
 
             <button className="admin-button" onClick={handleLogin}>
               Войти
