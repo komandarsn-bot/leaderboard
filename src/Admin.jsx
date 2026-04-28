@@ -96,41 +96,26 @@ export default function Admin() {
           <h1 className="admin-title">Вход в админку</h1>
           <p className="admin-subtitle">Управление leaderboard</p>
 
-         <div className="admin-form">
+          <div className="admin-form">
+            <input
+              className="admin-input"
+              placeholder="Логин"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+            />
 
-  <div className="admin-row">
-    <input
-      className="admin-input"
-      list="players-list"
-      placeholder="Ник игрока"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-    />
+            <input
+              className="admin-input"
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-    <input
-      className="admin-input"
-      type="number"
-      placeholder="Сумма"
-      value={amount}
-      onChange={(e) => setAmount(e.target.value)}
-    />
-  </div>
-
-  <datalist id="players-list">
-    {players.map((player, index) => (
-      <option key={index} value={player["НИК"]} />
-    ))}
-  </datalist>
-
-  <button className="admin-button" onClick={addUser}>
-    Добавить очки
-  </button>
-
-  <button className="admin-button danger" onClick={reset}>
-    Сбросить всё
-  </button>
-
-</div>
+            <button className="admin-button" onClick={handleLogin}>
+              Войти
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -144,27 +129,29 @@ export default function Admin() {
         <p className="admin-subtitle">Добавление суммы и управление таблицей</p>
 
         <div className="admin-form">
-          <input
-            className="admin-input"
-            list="players-list"
-            placeholder="Ник"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <div className="admin-row">
+            <input
+              className="admin-input"
+              list="players-list"
+              placeholder="Ник игрока"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <input
+              className="admin-input"
+              type="number"
+              placeholder="Сумма"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </div>
 
           <datalist id="players-list">
             {players.map((player, index) => (
               <option key={index} value={player["НИК"]} />
             ))}
           </datalist>
-
-          <input
-            className="admin-input"
-            type="number"
-            placeholder="Сумма (тг)"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
 
           <button className="admin-button" onClick={addUser}>
             Добавить очки
