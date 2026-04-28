@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./index.css";
 
 const API_URL = "https://leaderboard-server-vgia.onrender.com";
 
@@ -44,13 +45,13 @@ export default function Admin() {
       return;
     }
 
-    alert("Добавлено");
+    alert("Очки добавлены");
     setName("");
     setAmount("");
   };
 
   const reset = async () => {
-    if (!confirm("Сбросить таблицу?")) return;
+    if (!confirm("Точно сбросить всю таблицу?")) return;
 
     const res = await fetch(`${API_URL}/reset`, {
       method: "POST",
@@ -67,51 +68,74 @@ export default function Admin() {
       return;
     }
 
-    alert("Сброшено");
+    alert("Таблица сброшена");
   };
 
   if (!authorized) {
     return (
-      <div style={{ padding: "20px" }}>
-        <h2>Админ вход</h2>
+      <div className="admin-page">
+        <div className="admin-card">
+          <div className="admin-badge">RSN ADMIN</div>
+          <h1 className="admin-title">Вход в админку</h1>
+          <p className="admin-subtitle">Управление leaderboard</p>
 
-        <input
-          placeholder="Логин"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-        />
+          <div className="admin-form">
+            <input
+              className="admin-input"
+              placeholder="Логин"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+            />
 
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <input
+              className="admin-input"
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-        <button onClick={handleLogin}>Войти</button>
+            <button className="admin-button" onClick={handleLogin}>
+              Войти
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Админ панель</h2>
+    <div className="admin-page">
+      <div className="admin-card">
+        <div className="admin-badge">CONTROL PANEL</div>
+        <h1 className="admin-title">Админ панель</h1>
+        <p className="admin-subtitle">Добавление суммы и управление таблицей</p>
 
-      <input
-        placeholder="Ник"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        <div className="admin-form">
+          <input
+            className="admin-input"
+            placeholder="Ник игрока"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-      <input
-        type="number"
-        placeholder="Сумма (тг)"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
+          <input
+            className="admin-input"
+            type="number"
+            placeholder="Сумма (тг)"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
 
-      <button onClick={addUser}>Добавить</button>
-      <button onClick={reset}>Сбросить всё</button>
+          <button className="admin-button" onClick={addUser}>
+            Добавить очки
+          </button>
+
+          <button className="admin-button danger" onClick={reset}>
+            Сбросить всё
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
