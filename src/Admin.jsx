@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 
 const API_URL = "https://leaderboard-server-vgia.onrender.com";
@@ -10,6 +10,21 @@ export default function Admin() {
 
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
+  const [players, setPlayers] = useState([]);
+
+  const loadPlayers = async () => {
+    try {
+      const res = await fetch(`${API_URL}/leaderboard`);
+      const json = await res.json();
+      setPlayers(json);
+    } catch (err) {
+      console.log("Не удалось загрузить игроков");
+    }
+  };
+
+  useEffect(() => {
+    loadPlayers();
+  }, []);
 
   const handleLogin = () => {
     if (login === "admin" && password === "1234") {
@@ -48,6 +63,7 @@ export default function Admin() {
     alert("Очки добавлены");
     setName("");
     setAmount("");
+    loadPlayers();
   };
 
   const reset = async () => {
@@ -69,6 +85,7 @@ export default function Admin() {
     }
 
     alert("Таблица сброшена");
+    loadPlayers();
   };
 
   if (!authorized) {
@@ -114,10 +131,17 @@ export default function Admin() {
         <div className="admin-form">
           <input
             className="admin-input"
+            list="players-list"
             placeholder="Ник игрока"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+
+          <datalist id="players-list">
+            {players.map((player, index) => (
+              <option key={index} value={player["НИК"]} />
+            ))}
+          </datalist>
 
           <input
             className="admin-input"
