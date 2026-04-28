@@ -77,9 +77,14 @@ export default function MainPage() {
      const top10 = data.slice(0, 10);
       const rest = data.slice(10);
   return (
-    <div className="page">
 
 
+<div className="page">
+  <div className="site-logo-wrap">
+    <img src="/logo.png" className="site-logo" alt="logo" />
+  </div>
+
+  <div className="card"></div>
      <div className="card">
 
   {/* ТОП 10 */}
