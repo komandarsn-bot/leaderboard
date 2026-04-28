@@ -185,7 +185,7 @@ body {
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 230px);
+  grid-template-columns: repeat(5, 180px); /* под .row */
   gap: 24px;
   justify-content: center;
 }
