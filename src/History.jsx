@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import "./index.css";
 
 const supabase = createClient(
   "https://jolawvvbcpgnrsvuolkw.supabase.co",
@@ -21,7 +22,7 @@ export default function History() {
       return;
     }
 
-    setItems(data);
+    setItems(data || []);
   };
 
   useEffect(() => {
@@ -29,32 +30,40 @@ export default function History() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>История операций</h2>
+    <div className="history-page">
+      <div className="history-card">
+        <div className="admin-badge">TRANSACTIONS</div>
+        <h1 className="history-title">История операций</h1>
+        <p className="history-subtitle">Все начисления очков игрокам</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>НИК</th>
-            <th>Сумма</th>ы
-            <th>Очки</th>
-            <th>Очки</th>
-          </tr>
-        </thead>
+        <div className="history-table-wrap">
+          <table className="history-table">
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Ник</th>
+                <th>Сумма</th>
+                <th>XP</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id}>
-              <td>{new Date(item.created_at).toLocaleString("ru-RU")}</td>
-              <td>{item.nickname}</td>
-              <td>{item.amount}</td>
-              <td>{item.points}</td>
-              <td>{item.avatar}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  <td>{new Date(item.created_at).toLocaleString("ru-RU")}</td>
+                  <td className="history-name">{item.nickname}</td>
+                  <td>{item.amount} тг</td>
+                  <td className="history-xp">+{item.points} XP</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {items.length === 0 && (
+          <div className="history-empty">История пока пустая</div>
+        )}
+      </div>
     </div>
   );
 }

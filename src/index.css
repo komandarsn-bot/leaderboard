@@ -394,3 +394,86 @@ body {
     flex-direction: column;
   }
 }
+
+.history-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.history-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+}
+
+.history-title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.history-subtitle {
+  margin: 8px 0 26px;
+  color: #94a3b8;
+}
+
+.history-table-wrap {
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.history-table th {
+  text-align: left;
+  padding: 16px;
+  color: #94a3b8;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(2, 6, 23, 0.6);
+}
+
+.history-table td {
+  padding: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.history-table tr:hover td {
+  background: rgba(255,255,255,0.03);
+}
+
+.history-name {
+  font-weight: 800;
+  color: white;
+}
+
+.history-xp {
+  font-weight: 800;
+  color: #22d3ee;
+}
+
+.history-empty {
+  padding: 30px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  .history-card {
+    padding: 22px;
+  }
+
+  .history-title {
+    font-size: 28px;
+  }
+}
