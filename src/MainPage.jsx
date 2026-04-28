@@ -17,6 +17,7 @@ function getLevelInfo(xp) {
   ];
 
   let level = 1;
+
   for (let i = 0; i < levels.length; i++) {
     if (xp >= levels[i]) level = i + 1;
   }
@@ -38,11 +39,25 @@ function getLevelInfo(xp) {
 
 export default function MainPage() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const loadData = async () => {
-    const res = await fetch(`${API_URL}/leaderboard`);
-    const json = await res.json();
-    setData(json);
+    try {
+      setError("");
+
+      const res = await fetch(`${API_URL}/leaderboard`);
+      if (!res.ok) throw new Error("server error");
+
+      const json = await res.json();
+      setData(json);
+
+      setLoading(false);
+    } catch (err) {
+      setLoading(true);
+      setError("Сервер просыпается... пробуем ещё раз");
+      setTimeout(loadData, 3000);
+    }
   };
 
   useEffect(() => {
@@ -65,43 +80,50 @@ export default function MainPage() {
       <h1 className="title">Leaderboard</h1>
 
       <div className="card">
-        {data.map((row, index) => {
-          const xp = Number(row["Очков"]) || 0;
-          const level = getLevelInfo(xp);
+        {loading && (
+          <div className="loading">
+            {error || "Загрузка таблицы..."}
+          </div>
+        )}
 
-          return (
-            <div className="row" key={index}>
-              <div className={`place place-${index + 1}`}>
-                {row["Место"]}
-              </div>
+        {!loading &&
+          data.map((row, index) => {
+            const xp = Number(row["Очков"]) || 0;
+            const level = getLevelInfo(xp);
 
-              <div className="player">
-                <img
-                  src={`/avatars/1 уровень.png`}
-                  className="avatar"
-                />
-                <div className="name">{row["НИК"]}</div>
-              </div>
-
-             <div className="level-box">
-              <span>LEVEL</span>
-              <strong>{level.level}</strong>
-            </div>
-
-           
-
-            <div className="progress-block">
-                <div className="bar">
-                  <div
-                    className="fill"
-                    style={{ width: `${level.percent}%` }}
-                  />
+            return (
+              <div className="row" key={index}>
+                <div className={`place place-${index + 1}`}>
+                  {row["Место"]}
                 </div>
-                <div className="xp-text">{level.text}</div>
+
+                <div className="player">
+                  <img
+                    src={`/avatars/1 уровень.png`}
+                    className="avatar"
+                    alt="avatar"
+                  />
+                  <div className="name">{row["НИК"]}</div>
+                </div>
+
+                <div className="level-box">
+                  <span>LEVEL</span>
+                  <strong>{level.level}</strong>
+                </div>
+
+                <div className="progress-block">
+                  <div className="bar">
+                    <div
+                      className="fill"
+                      style={{ width: `${level.percent}%` }}
+                    />
+                  </div>
+
+                  <div className="xp-text">{level.text}</div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );
