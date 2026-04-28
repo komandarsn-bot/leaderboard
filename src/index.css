@@ -75,17 +75,18 @@ body {
   min-width: 80px;
   min-height: 80px;
 
-  border-radius: 16px;
-  object-fit: cover;
+  object-fit: contain; /* ВАЖНО для прозрачных PNG */
 
-  box-shadow: 0 0 25px rgba(139,92,246,0.6),
-              0 0 50px rgba(34,211,238,0.2);
+  border-radius: 0; /* убрали рамку */
+  box-shadow: none; /* убрали свечение */
 
+  background: transparent; /* чтобы не было фона */
   transition: 0.3s;
 }
 
 .avatar:hover {
   transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(167,139,250,0.6));
 }
 
 .name {
