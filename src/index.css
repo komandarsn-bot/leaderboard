@@ -28,15 +28,7 @@ body {
 
 /* Строка */
 .row {
-  display: grid;
-  grid-template-columns: 70px 260px 120px 220px;
-  column-gap: 20px;
-  align-items: center;
-
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-
-  transition: 0.25s ease;
+  grid-template-columns: 70px 260px 220px;
 }
 
 .row:hover {
@@ -128,21 +120,21 @@ body {
   text-align: center;
 }
 
-.level-box {
-  width: 110px;
-  height: 50px;
+.player-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.level-box span {
-  font-size: 10px;
+.level-text {
+  font-size: 14px;
   color: #94a3b8;
-  letter-spacing: 1px;
+  margin-top: 4px;
 }
 
-.level-box strong {
-  font-size: 18px;
-  color: #a78bfa;
-}
+
+
+
 
 .progress-block {
   width: 220px;

@@ -98,18 +98,16 @@ export default function MainPage() {
                 </div>
 
                 <div className="player">
-                  <img
-                    src={`/avatars/1 уровень.png`}
-                    className="avatar"
-                    alt="avatar"
-                  />
-                  <div className="name">{row["НИК"]}</div>
-                </div>
+  <img
+    src={`/avatars/1 уровень.png`}
+    className="avatar"
+  />
 
-                <div className="level-box">
-                  <span>LEVEL</span>
-                  <strong>{level.level}</strong>
-                </div>
+  <div className="player-info">
+    <div className="name">{row["НИК"]}</div>
+    <div className="level-text">Level {level.level}</div>
+  </div>
+</div>
 
                 <div className="progress-block">
                   <div className="bar">
