@@ -33,18 +33,16 @@ body {
   flex-direction: column;
   align-items: center;
 
-  width: 200px;
-  min-height: 260px;
-  padding: 24px 18px 18px;
+  width: 100%; /* ВАЖНО */
+  max-width: 200px;
 
-  border-radius: 18px;
+  min-height: 240px;
+  padding: 18px 12px 14px;
 
+  border-radius: 16px;
   background: rgba(15, 23, 42, 0.85);
+
   border: 1px solid rgba(255,255,255,0.08);
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-
-  transition: 0.3s;
 }
 
 .row:hover {
@@ -193,8 +191,7 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 200px);
-  column-gap: 24px;
-  row-gap: 24px;
+  gap: 20px;
   justify-content: center;
 }
 @media (max-width: 700px) {
@@ -265,8 +262,9 @@ body {
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 700px) {
   .grid {
-    grid-template-columns: 160px;
+    grid-template-columns: repeat(2, 1fr); /* 👈 важно */
+    padding: 0 10px;
   }
 }
