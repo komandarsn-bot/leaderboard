@@ -79,7 +79,7 @@ export default function MainPage() {
     <div className="page">
       <h1 className="title">Leaderboard</h1>
 
-      <div className="card">
+      <div className="card grid">
         {loading && (
           <div className="loading">
             {error || "Загрузка таблицы..."}
