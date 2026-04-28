@@ -64,8 +64,9 @@ body {
   font-size: 18px;
   font-weight: 800;
 
-  background: rgba(255,255,255,0.12); /* 👈 это для 4,5,6 и дальше */
+  background: rgba(255,255,255,0.12);
   color: white;
+}
 
 .place-1 {
   background: linear-gradient(135deg, #facc15, #f97316);
