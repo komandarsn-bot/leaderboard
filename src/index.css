@@ -34,7 +34,7 @@ body {
   align-items: center;
 
   width: 200px;
-  min-height: 340px;
+  min-height: 260px;
   padding: 24px 18px 18px;
 
   border-radius: 18px;
@@ -182,8 +182,9 @@ body {
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 200px); /* под .row */
-  gap: 24px;
+  grid-template-columns: repeat(5, 200px);
+  column-gap: 24px;
+  row-gap: 24px;
   justify-content: center;
 }
 @media (max-width: 1200px) {
