@@ -82,6 +82,13 @@ app.get("/leaderboard", async (req, res) => {
   }
 });
 
+
+app.post("/admin-check", (req, res) => {
+  if (!checkAdmin(req, res)) return;
+
+  res.json({ ok: true });
+});
+
 app.post("/add", async (req, res) => {
   try {
     if (!checkAdmin(req, res)) return;

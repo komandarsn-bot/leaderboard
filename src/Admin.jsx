@@ -26,9 +26,22 @@ export default function Admin() {
     loadPlayers();
   }, []);
 
-  const handleLogin = () => {
+const handleLogin = async () => {
   if (!login || !password) {
     alert("Введите логин и пароль");
+    return;
+  }
+
+  const res = await fetch(`${API_URL}/admin-check`, {
+    method: "POST",
+    headers: {
+      "x-admin-login": login,
+      "x-admin-password": password,
+    },
+  });
+
+  if (!res.ok) {
+    alert("Неверный логин или пароль");
     return;
   }
 
