@@ -482,3 +482,81 @@ body {
   background: linear-gradient(90deg, #334155, #0f766e);
   box-shadow: 0 12px 30px rgba(20,184,166,0.18);
 }
+
+@media (max-width: 600px) {
+  .history-page {
+    padding: 20px 12px;
+  }
+
+  .history-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .history-title {
+    font-size: 26px;
+  }
+
+  .history-subtitle {
+    font-size: 14px;
+  }
+
+  .history-table-wrap {
+    border: none;
+    overflow: visible;
+  }
+
+  .history-table,
+  .history-table thead,
+  .history-table tbody,
+  .history-table tr,
+  .history-table th,
+  .history-table td {
+    display: block;
+  }
+
+  .history-table thead {
+    display: none;
+  }
+
+  .history-table tr {
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .history-table td {
+    padding: 8px 0;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .history-table td:nth-child(1)::before {
+    content: "Дата";
+    color: #94a3b8;
+  }
+
+  .history-table td:nth-child(2)::before {
+    content: "Ник";
+    color: #94a3b8;
+  }
+
+  .history-table td:nth-child(3)::before {
+    content: "Сумма";
+    color: #94a3b8;
+  }
+
+  .history-table td:nth-child(4)::before {
+    content: "XP";
+    color: #94a3b8;
+  }
+
+  .history-table td {
+    text-align: right;
+  }
+}
