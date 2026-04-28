@@ -71,10 +71,11 @@ export default function MainPage() {
         loadData
       )
       .subscribe();
-
+ 
     return () => supabase.removeChannel(channel);
   }, []);
-
+     const top10 = data.slice(0, 10);
+      const rest = data.slice(10);
   return (
     <div className="page">
 
@@ -87,7 +88,7 @@ export default function MainPage() {
         )}
 
         {!loading &&
-          data.map((row, index) => {
+          top10.map((row, index) => {
             const xp = Number(row["Очков"]) || 0;
             const level = getLevelInfo(xp);
 

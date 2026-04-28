@@ -23,7 +23,6 @@ body {
 /* Карточка */
 .card {
   width: fit-content;
-  margin: 0 auto;
 }
 
 /* Строка */
@@ -132,6 +131,12 @@ body {
   color: #cbd5f5;
 }
 
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .bar {
   height: 14px;
