@@ -22,7 +22,7 @@ body {
 
 /* Карточка */
 .card {
-  width: fit-content;
+  width: 100%;
 }
 
 /* Строка */
@@ -186,8 +186,9 @@ body {
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(5, 230px);
+  gap: 24px;
+  justify-content: center;
 }
 @media (max-width: 1200px) {
   .grid {
