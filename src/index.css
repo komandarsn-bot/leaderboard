@@ -376,3 +376,17 @@ body {
     font-size: 28px;
   }
 }
+.admin-row {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-row .admin-input {
+  flex: 1;
+}
+
+@media (max-width: 500px) {
+  .admin-row {
+    flex-direction: column;
+  }
+}
