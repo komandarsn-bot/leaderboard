@@ -50,7 +50,7 @@ const handleLogin = async () => {
 
     setAuthorized(true);
   } catch (err) {
-    alert("Ошибка соединения");
+    alert("Неверный логин или пароль");
   }
 };
 
