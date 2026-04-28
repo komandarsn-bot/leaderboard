@@ -7,13 +7,6 @@ body {
   color: white;
 }
 
-body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: white;
-}
-
 /* Заголовок */
 .title {
   text-align: center;
@@ -41,12 +34,10 @@ body {
 /* Строка */
 .row {
   display: grid;
-  grid-template-columns: 80px minmax(260px, 1.4fr) 150px 180px 1.8fr;
+  grid-template-columns: 80px minmax(260px, 1.5fr) 130px 2fr;
   column-gap: 28px;
   align-items: center;
-  justify-content: center;
-  padding: 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: 0.25s ease;
 }
 
 .row:hover {
@@ -120,14 +111,6 @@ body {
   color: #cbd5f5;
 }
 
-/* Прогресс */
-.progress-block {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  max-width: 260px;   /* ограничили ширину */
-}
 
 .bar {
   width: 100%;
@@ -147,6 +130,8 @@ body {
 .xp-text {
   font-size: 13px;
   color: #94a3b8;
+  margin-top: 4px;
+  text-align: center;
 }
 
 .level-box {
@@ -180,8 +165,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-
-  max-width: 260px;   /* ограничили ширину */
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 260px;
+  margin: 0 auto;
 }
