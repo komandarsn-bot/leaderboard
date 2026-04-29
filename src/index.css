@@ -148,11 +148,6 @@ body {
   min-height: 100vh;
 }
 
-.top-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
 
 .rest {
   margin-top: 60px;
@@ -222,11 +217,6 @@ body {
     overflow-x: hidden;
   }
 
-  .top-wrapper {
-    min-height: auto;
-    display: block;
-    padding: 24px 0 40px;
-  }
 
   .card {
     width: 100%;
@@ -585,11 +575,6 @@ body {
   color: white;
 }
 
-.top-logo {
-  display: flex;
-  justify-content: center;
-  height: 140px; /* фиксируем */
-}
 
 .top-wrapper {
   width: 100%;
@@ -597,23 +582,31 @@ body {
   justify-content: center;
 }
 
+@media (min-height: 900px) {
+  .top-logo {
+    margin-top: 60px; /* опускаем ниже */
+  }
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(45px);
+}
+
 .top-logo-img {
-width: clamp(80px, 10vh, 140px);
-height: clamp(80px, 10vh, 140px);
+  width: clamp(90px, 10vh, 140px);
+  height: clamp(90px, 10vh, 140px);
   border-radius: 50%;
+  margin-bottom: 24px;
 
   filter:
     drop-shadow(0 0 10px rgba(255,255,255,0.7))
     drop-shadow(0 0 30px rgba(255,255,255,0.3));
 
   transition: 0.3s;
-}
-
-.top-logo-img:hover {
-  transform: scale(1.08);
-}
-@media (min-height: 900px) {
-  .top-logo {
-    margin-top: 60px; /* опускаем ниже */
-  }
 }

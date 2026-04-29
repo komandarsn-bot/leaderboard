@@ -80,12 +80,10 @@ export default function MainPage() {
 
 
 <div className="page">
-  <div className="top-logo">
+  <div className="hero-section">
   <img src="/logo.png" className="top-logo-img" alt="logo" />
-</div>
-<div className="top-section">
-    <div className="top-wrapper">
-      <div className="grid"></div>
+
+  <div className="grid">
 
   <div className="card"></div>
      <div className="card">
