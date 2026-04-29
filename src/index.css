@@ -4,7 +4,7 @@ body {
   margin: 0;
   font-family: 'Manrope', sans-serif;
 
-  background: red !important; /* 👈 ЯРКО КРАСНЫЙ */
+  background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
 }
 
@@ -603,10 +603,4 @@ body {
 :-webkit-full-screen .hero-section,
 :-ms-fullscreen .hero-section {
   padding-top: 120px;
-}
-
-.top-logo-img {
-  width: 300px !important;
-  height: 300px !important;
-  outline: 3px solid red;
 }
