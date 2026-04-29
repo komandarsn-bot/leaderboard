@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
 
@@ -13,7 +13,7 @@ function getLevelInfo(xp) {
   const levels = [
     0, 100, 200, 300, 400, 500,
     650, 800, 950, 1100, 1250,
-    1500, 1750, 2000, 2250
+    1500, 1750, 2000, 2250,
   ];
 
   let level = 1;
@@ -42,7 +42,7 @@ export default function MainPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setError("");
 
@@ -51,14 +51,16 @@ export default function MainPage() {
 
       const json = await res.json();
       setData(json);
-
       setLoading(false);
     } catch (err) {
       setLoading(true);
       setError("Сервер просыпается... пробуем ещё раз");
-      setTimeout(loadData, 3000);
+
+      setTimeout(() => {
+        loadData();
+      }, 3000);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadData();
@@ -71,98 +73,110 @@ export default function MainPage() {
         loadData
       )
       .subscribe();
- 
-    return () => supabase.removeChannel(channel);
-  }, []);
-     const top10 = data.slice(0, 10);
-      const rest = data.slice(10);
-return (
-  <div className="page">
-    <div className="card">
-      <div className="hero-section">
-        <img
-  src="/logo.png?v=5"
-  className="top-logo-img"
-  alt="logo"
 
-/>
-<div className="top-wrapper">
-        <div className="grid">
-          {!loading &&
-            top10.map((row, index) => {
-              const xp = Number(row["Очков"]) || 0;
-              const level = getLevelInfo(xp);
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [loadData]);
 
-              return (
-                <div className="row" key={index}>
-                  <div className={`place place-${index + 1}`}>
-                    {row["Место"]}
-                  </div>
+  const top10 = data.slice(0, 10);
+  const restPlayers = data.slice(10);
 
-                  <div className="player">
-                    <img
-                        src={`/avatars/${Math.min(level.level, 15)}.png`}
-                        className={`avatar avatar-lvl-${level.level}`}
-                        alt="avatar"
-                    />
-                    <div className="player-info">
-                      <div className="name">{row["НИК"]}</div>
-                      <div className="level-text">Level {level.level}</div>
+  return (
+    <div className="page">
+      <div className="card">
+        <div className="hero-section">
+          <img
+            src="/logo.png?v=5"
+            className="top-logo-img"
+            alt="logo"
+          />
+
+          {error && <div className="xp-text">{error}</div>}
+
+          <div className="top-wrapper">
+            <div className="grid">
+              {!loading &&
+                top10.map((row, index) => {
+                  const xp = Number(row["Очков"]) || 0;
+                  const level = getLevelInfo(xp);
+
+                  return (
+                    <div className="row" key={index}>
+                      <div className={`place place-${index + 1}`}>
+                        {row["Место"]}
+                      </div>
+
+                      <div className="player">
+                        <img
+                          src={`/avatars/${Math.min(level.level, 15)}.png`}
+                          className={`avatar avatar-lvl-${level.level}`}
+                          alt="avatar"
+                        />
+
+                        <div className="player-info">
+                          <div className="name">{row["НИК"]}</div>
+                          <div className="level-text">Level {level.level}</div>
+                        </div>
+                      </div>
+
+                      <div className="progress-block">
+                        <div className="bar">
+                          <div
+                            className="fill"
+                            style={{ width: `${level.percent}%` }}
+                          />
+                        </div>
+                        <div className="xp-text">{level.text}</div>
+                      </div>
                     </div>
-                  </div>
+                  );
+                })}
+            </div>
+          </div>
 
-                  <div className="progress-block">
-                    <div className="bar">
-                      <div
-                        className="fill"
-                        style={{ width: `${level.percent}%` }}
-                      />
+          <div className="rest">
+            <div className="grid">
+              {!loading &&
+                restPlayers.map((row, index) => {
+                  const xp = Number(row["Очков"]) || 0;
+                  const level = getLevelInfo(xp);
+
+                  return (
+                    <div className="row" key={index}>
+                      <div className={`place place-${index + 11}`}>
+                        {row["Место"]}
+                      </div>
+
+                      <div className="player">
+                        <img
+                          src={`/avatars/${Math.min(level.level, 15)}.png`}
+                          className={`avatar avatar-lvl-${level.level}`}
+                          alt="avatar"
+                        />
+
+                        <div className="player-info">
+                          <div className="name">{row["НИК"]}</div>
+                          <div className="level-text">Level {level.level}</div>
+                        </div>
+                      </div>
+
+                      <div className="progress-block">
+                        <div className="bar">
+                          <div
+                            className="fill"
+                            style={{ width: `${level.percent}%` }}
+                          />
+                        </div>
+                        <div className="xp-text">{level.text}</div>
+                      </div>
                     </div>
-                    <div className="xp-text">{level.text}</div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="grid rest">
-        {rest.map((row, index) => {
-          const xp = Number(row["Очков"]) || 0;
-          const level = getLevelInfo(xp);
-
-          return (
-            <div className="row" key={index}>
-              <div className={`place place-${index + 11}`}>
-                {row["Место"]}
-              </div>
-
-              <div className="player">
-                <img
-                  src={`/avatars/${Math.min(level.level, 15)}.png`}
-                  className={`avatar avatar-lvl-${level.level}`}
-                />
-
-                <div className="player-info">
-                  <div className="name">{row["НИК"]}</div>
-                  <div className="level-text">Level {level.level}</div>
-                </div>
-              </div>
-
-              <div className="progress-block">
-                <div className="bar">
-                  <div
-                    className="fill"
-                    style={{ width: `${level.percent}%` }}
-                  />
-                </div>
-                <div className="xp-text">{level.text}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
     </div>
-  </div>
-);
+  );
 }
