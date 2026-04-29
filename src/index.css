@@ -149,10 +149,9 @@ body {
 }
 
 .top-wrapper {
-  min-height: calc(100vh - 140px); /* 👈 подгони под height выше */
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .rest {
@@ -589,9 +588,13 @@ body {
 .top-logo {
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 140px; /* фиксируем */
+}
 
-  height: clamp(100px, 12vh, 160px); /* 👈 вот это важно */
+.top-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .top-logo-img {
