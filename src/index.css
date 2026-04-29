@@ -3,7 +3,8 @@
 body {
   margin: 0;
   font-family: 'Manrope', sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
+
+  background: red !important; /* 👈 ЯРКО КРАСНЫЙ */
   color: white;
 }
 
@@ -589,7 +590,9 @@ body {
   height: 220px;
   border-radius: 50%;
   margin-bottom: 20px;
-
+ filter:
+    drop-shadow(0 0 10px rgba(255,255,255,0.7))
+    drop-shadow(0 0 30px rgba(255,255,255,0.3));
 
   transition: 0.3s;
 }
