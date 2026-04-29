@@ -576,8 +576,7 @@ body {
 }
 
 .hero-section {
-  min-height: 100vh;
-  padding-top: 80px;
+  padding-top: 40px;
 
   display: flex;
   flex-direction: column;
@@ -598,11 +597,7 @@ body {
   transition: 0.3s;
 }
 
-@media (min-height: 900px) {
-  .hero-section {
-    padding-top: 120px;
-  }
-}
+
 
 
   filter:
