@@ -595,8 +595,8 @@ body {
 }
 
 .top-logo-img {
-  width: 90px;
-  height: 90px;
+width: clamp(80px, 10vh, 140px);
+height: clamp(80px, 10vh, 140px);
   border-radius: 50%;
 
   filter:
