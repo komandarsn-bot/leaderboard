@@ -80,7 +80,7 @@ return (
   <div className="page">
     <div className="card">
       <div className="hero-section">
-        <img src="/logo.png" className="top-logo-img" alt="logo" />
+        <img src="/logo.png?v=2" className="top-logo-img" alt="logo" />
 
         <div className="grid">
           {!loading &&

@@ -1,5 +1,5 @@
 
-# React + Vite
+git commit -m "test logo size"# React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
