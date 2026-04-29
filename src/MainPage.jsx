@@ -83,9 +83,7 @@ export default function MainPage() {
   <div className="top-logo">
   <img src="/logo.png" className="top-logo-img" alt="logo" />
 </div>
-  <div className="site-logo-wrap">
-    <img src="/logo.png" className="site-logo" alt="logo" />
-  </div>
+
 
   <div className="card"></div>
      <div className="card">
