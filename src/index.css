@@ -585,10 +585,10 @@ body {
 }
 
 .top-logo-img {
-  width: clamp(90px, 10vh, 140px);
-  height: clamp(90px, 10vh, 140px);
+  width: clamp(180px, 20vh, 280px);
+  height: clamp(180px, 20vh, 280px);
   border-radius: 50%;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 
   filter:
     drop-shadow(0 0 10px rgba(255,255,255,0.7))
