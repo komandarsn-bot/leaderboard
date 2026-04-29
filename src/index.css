@@ -587,8 +587,8 @@ body {
 
 .site-logo-wrap {
   position: fixed;
-  top: 80px;
-  left: 60px;
+  top: 120px;
+  left: 50px;
   z-index: 100;
 }
 
