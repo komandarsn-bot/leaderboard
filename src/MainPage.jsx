@@ -86,7 +86,7 @@ return (
   alt="logo"
 
 />
-
+<div className="top-wrapper">
         <div className="grid">
           {!loading &&
             top10.map((row, index) => {
@@ -101,10 +101,10 @@ return (
 
                   <div className="player">
                     <img
-                      src={`/avatars/${Math.min(level.level, 15)}.png`}
-                      className={`avatar avatar-lvl-${level.level}`}
+                        src={`/avatars/${Math.min(level.level, 15)}.png`}
+                        className={`avatar avatar-lvl-${level.level}`}
+                        alt="avatar"
                     />
-
                     <div className="player-info">
                       <div className="name">{row["НИК"]}</div>
                       <div className="level-text">Level {level.level}</div>
