@@ -76,37 +76,67 @@ export default function MainPage() {
   }, []);
      const top10 = data.slice(0, 10);
       const rest = data.slice(10);
-  return (
+return (
+  <div className="page">
+    <div className="card">
+      <div className="hero-section">
+        <img src="/logo.png" className="top-logo-img" alt="logo" />
 
+        <div className="grid">
+          {!loading &&
+            top10.map((row, index) => {
+              const xp = Number(row["Очков"]) || 0;
+              const level = getLevelInfo(xp);
 
-<div className="page">
-  <div className="hero-section">
-  <img src="/logo.png" className="top-logo-img" alt="logo" />
+              return (
+                <div className="row" key={index}>
+                  <div className={`place place-${index + 1}`}>
+                    {row["Место"]}
+                  </div>
 
-  <div className="grid">
+                  <div className="player">
+                    <img
+                      src={`/avatars/${Math.min(level.level, 15)}.png`}
+                      className={`avatar avatar-lvl-${level.level}`}
+                    />
 
-  <div className="card"></div>
-     <div className="card">
+                    <div className="player-info">
+                      <div className="name">{row["НИК"]}</div>
+                      <div className="level-text">Level {level.level}</div>
+                    </div>
+                  </div>
 
-  {/* ТОП 10 */}
-  <div className="top-wrapper">
-    <div className="grid">
-      {!loading &&
-        top10.map((row, index) => {
+                  <div className="progress-block">
+                    <div className="bar">
+                      <div
+                        className="fill"
+                        style={{ width: `${level.percent}%` }}
+                      />
+                    </div>
+                    <div className="xp-text">{level.text}</div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+
+      <div className="grid rest">
+        {rest.map((row, index) => {
           const xp = Number(row["Очков"]) || 0;
           const level = getLevelInfo(xp);
 
           return (
             <div className="row" key={index}>
-              <div className={`place place-${index + 1}`}>
+              <div className={`place place-${index + 11}`}>
                 {row["Место"]}
               </div>
 
               <div className="player">
-             <img
-             src={`/avatars/${Math.min(level.level, 15)}.png`}
-             className={`avatar avatar-lvl-${level.level}`}
-              />
+                <img
+                  src={`/avatars/${Math.min(level.level, 15)}.png`}
+                  className={`avatar avatar-lvl-${level.level}`}
+                />
 
                 <div className="player-info">
                   <div className="name">{row["НИК"]}</div>
@@ -126,48 +156,7 @@ export default function MainPage() {
             </div>
           );
         })}
+      </div>
     </div>
   </div>
-
-  {/* ОСТАЛЬНЫЕ */}
-  <div className="grid rest">
-    {rest.map((row, index) => {
-      const xp = Number(row["Очков"]) || 0;
-      const level = getLevelInfo(xp);
-
-      return (
-        <div className="row" key={index}>
-          <div className={`place place-${index + 11}`}>
-            {row["Место"]}
-          </div>
-
-          <div className="player">
-          <img
-             src={`/avatars/${Math.min(level.level, 15)}.png`}
-              className={`avatar avatar-lvl-${level.level}`}
-              />
-
-            <div className="player-info">
-              <div className="name">{row["НИК"]}</div>
-              <div className="level-text">Level {level.level}</div>
-            </div>
-          </div>
-
-          <div className="progress-block">
-            <div className="bar">
-              <div
-                className="fill"
-                style={{ width: `${level.percent}%` }}
-              />
-            </div>
-            <div className="xp-text">{level.text}</div>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-
-</div>
-</div>
-  );
-}
+);
