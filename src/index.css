@@ -149,7 +149,7 @@ body {
 }
 
 .top-wrapper {
-  min-height: calc(100vh - 120px); /* учитывает лого */
+  min-height: calc(100vh - 140px); /* 👈 подгони под height выше */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -589,8 +589,9 @@ body {
 .top-logo {
   display: flex;
   justify-content: center;
+  align-items: center;
 
-  margin-top: 20px; /* обычный режим */
+  height: clamp(100px, 12vh, 160px); /* 👈 вот это важно */
 }
 
 .top-logo-img {
