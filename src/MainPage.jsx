@@ -80,7 +80,16 @@ return (
   <div className="page">
     <div className="card">
       <div className="hero-section">
-        <img src="/logo.png?v=2" className="top-logo-img" alt="logo" />
+        <img
+  src="/logo.png?v=5"
+  className="top-logo-img"
+  alt="logo"
+  style={{
+    width: "300px",
+    height: "300px",
+    outline: "4px solid red",
+  }}
+/>
 
         <div className="grid">
           {!loading &&
