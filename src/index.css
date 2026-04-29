@@ -149,9 +149,7 @@ body {
 }
 
 .top-wrapper {
-  min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -588,8 +586,8 @@ body {
 .top-logo {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 .top-logo-img {
