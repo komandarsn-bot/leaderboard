@@ -575,28 +575,35 @@ body {
   color: white;
 }
 
-
-.top-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-@media (min-height: 900px) {
-  .top-logo {
-    margin-top: 60px; /* опускаем ниже */
-  }
-}
-
 .hero-section {
   min-height: 100vh;
+  padding-top: 80px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  transform: translateY(100px);
+  justify-content: flex-start;
 }
+
+.top-logo-img {
+  width: clamp(90px, 10vh, 140px);
+  height: clamp(90px, 10vh, 140px);
+  border-radius: 50%;
+  margin-bottom: 28px;
+
+  filter:
+    drop-shadow(0 0 10px rgba(255,255,255,0.7))
+    drop-shadow(0 0 30px rgba(255,255,255,0.3));
+
+  transition: 0.3s;
+}
+
+@media (min-height: 900px) {
+  .hero-section {
+    padding-top: 120px;
+  }
+}
+
 
 .top-logo-img {
   width: clamp(90px, 10vh, 140px);
