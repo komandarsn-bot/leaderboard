@@ -585,8 +585,8 @@ body {
 }
 
 .top-logo-img {
-  width: clamp(180px, 20vh, 280px);
-  height: clamp(180px, 20vh, 280px);
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   margin-bottom: 20px;
 
@@ -599,13 +599,6 @@ body {
 
 
 
-
-  filter:
-    drop-shadow(0 0 10px rgba(255,255,255,0.7))
-    drop-shadow(0 0 30px rgba(255,255,255,0.3));
-
-  transition: 0.3s;
-}
 :fullscreen .hero-section,
 :-webkit-full-screen .hero-section,
 :-ms-fullscreen .hero-section {
