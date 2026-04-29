@@ -606,6 +606,8 @@ body {
 
   transition: 0.3s;
 }
-:fullscreen .hero-section {
+:fullscreen .hero-section,
+:-webkit-full-screen .hero-section,
+:-ms-fullscreen .hero-section {
   padding-top: 120px;
 }
