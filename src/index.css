@@ -589,9 +589,8 @@ body {
 .top-logo {
   display: flex;
   justify-content: center;
-  align-items: center;
 
-  height: 120px; /* фиксируем */
+  margin-top: 20px; /* обычный режим */
 }
 
 .top-logo-img {
@@ -608,4 +607,9 @@ height: clamp(80px, 10vh, 140px);
 
 .top-logo-img:hover {
   transform: scale(1.08);
+}
+@media (min-height: 900px) {
+  .top-logo {
+    margin-top: 60px; /* опускаем ниже */
+  }
 }
