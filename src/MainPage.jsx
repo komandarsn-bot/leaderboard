@@ -43,24 +43,37 @@ export default function MainPage() {
   const [error, setError] = useState("");
 
   const loadData = useCallback(async () => {
-    try {
-      setError("");
+  try {
+    setError("");
 
-      const res = await fetch(`${API_URL}/leaderboard`);
-      if (!res.ok) throw new Error("server error");
-
-      const json = await res.json();
-      setData(json);
+    // 🔥 1. СНАЧАЛА берем кеш (мгновенная загрузка)
+    const cached = localStorage.getItem("leaderboard");
+    if (cached) {
+      setData(JSON.parse(cached));
       setLoading(false);
-    } catch (err) {
-      setLoading(true);
-      setError("Сервер просыпается... пробуем ещё раз");
-
-      setTimeout(() => {
-        loadData();
-      }, 3000);
     }
-  }, []);
+
+    // 🔄 2. Потом идёт реальный запрос
+    const res = await fetch(`${API_URL}/leaderboard`);
+    if (!res.ok) throw new Error("server error");
+
+    const json = await res.json();
+
+    setData(json);
+
+    // 💾 3. Сохраняем в кеш
+    localStorage.setItem("leaderboard", JSON.stringify(json));
+
+    setLoading(false);
+  } catch (err) {
+    setLoading(true);
+    setError("Сервер просыпается... пробуем ещё раз");
+
+    setTimeout(() => {
+      loadData();
+    }, 3000);
+  }
+}, []);
 
   useEffect(() => {
     loadData();
