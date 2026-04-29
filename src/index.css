@@ -149,13 +149,16 @@ body {
 }
 
 .top-wrapper {
+  min-height: calc(100vh - 140px);
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding-top: 20px;
 }
 
 .rest {
-  margin-top: 40px;
+  margin-top: 60px;
+  padding-bottom: 80px;
 }
 
 .bar {
@@ -588,7 +591,7 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .top-logo-img {
