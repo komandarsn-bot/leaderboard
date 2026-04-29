@@ -606,3 +606,6 @@ body {
 
   transition: 0.3s;
 }
+:fullscreen .hero-section {
+  padding-top: 120px;
+}
