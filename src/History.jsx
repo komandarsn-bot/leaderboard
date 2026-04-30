@@ -15,6 +15,7 @@ export default function History() {
   const [nickname, setNickname] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   const loadHistory = async () => {
     let query = supabase
@@ -55,7 +56,10 @@ export default function History() {
 
     loadHistory();
   }, [navigate]);
+
+  // уникальные ники (без дублей)
   const uniqueNicknames = [...new Set(items.map(i => i.nickname))];
+
   return (
     <div className="history-page">
       <div className="history-card">
@@ -64,22 +68,45 @@ export default function History() {
         <p className="history-subtitle">Все начисления очков игрокам</p>
 
         <div className="history-filters">
-          <input
+
+          {/* 🔍 Поиск с подсказками */}
+          <div style={{ position: "relative" }}>
             <input
               className="admin-input"
               type="text"
-              list="nicknames"
               placeholder="Поиск по нику"
               value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setNickname(value);
+
+                const filtered = uniqueNicknames.filter(nick =>
+                  nick.toLowerCase().includes(value.toLowerCase())
+                );
+
+                setSuggestions(value ? filtered : []);
+              }}
             />
 
-            <datalist id="nicknames">
-            {items.map((item, index) => (
-            <option key={index} value={item.nickname} />
-            ))}
-            </datalist>
+            {suggestions.length > 0 && (
+              <div className="suggestions">
+                {suggestions.slice(0, 5).map((nick, index) => (
+                  <div
+                    key={index}
+                    className="suggestion-item"
+                    onClick={() => {
+                      setNickname(nick);
+                      setSuggestions([]);
+                    }}
+                  >
+                    {nick}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
+          {/* 📅 Фильтр по дате */}
           <input
             className="admin-input"
             type="date"
@@ -94,6 +121,7 @@ export default function History() {
             onChange={(e) => setDateTo(e.target.value)}
           />
 
+          {/* 🔎 Кнопки */}
           <button className="admin-button" onClick={loadHistory}>
             Найти
           </button>
@@ -104,6 +132,7 @@ export default function History() {
               setNickname("");
               setDateFrom("");
               setDateTo("");
+              setSuggestions([]);
               setTimeout(loadHistory, 0);
             }}
           >
@@ -111,6 +140,7 @@ export default function History() {
           </button>
         </div>
 
+        {/* 📊 Таблица */}
         <div className="history-table-wrap">
           <table className="history-table">
             <thead>
