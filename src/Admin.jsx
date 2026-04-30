@@ -193,7 +193,7 @@ setAuthorized(true);
 
           <button
   className="admin-button history"
-  onClick={() => navigate("/history")}
+  onClick={() => navigate("/admin/history")}
 >
   История
 </button>
