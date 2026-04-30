@@ -47,23 +47,10 @@ export default function History() {
   };
 
   useEffect(() => {
-  const time = sessionStorage.getItem("admin-auth");
+  // 🔥 всегда сбрасываем авторизацию
+  sessionStorage.removeItem("admin-auth");
 
-  if (!time) {
-    navigate("/admin");
-    return;
-  }
-
-  const diff = Date.now() - Number(time);
-
-  // 5 минут = 300000 мс
-  if (diff > 300000) {
-    sessionStorage.removeItem("admin-auth");
-    navigate("/admin");
-    return;
-  }
-
-  loadHistory();
+  navigate("/admin");
 }, [navigate]);
 
   // уникальные ники (без дублей)
