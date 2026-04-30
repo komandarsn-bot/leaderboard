@@ -46,11 +46,15 @@ export default function History() {
     setItems(data || []);
   };
 
-  useEffect(() => {
-  // 🔥 всегда сбрасываем авторизацию
-  sessionStorage.removeItem("admin-auth");
+useEffect(() => {
+  const isAuth = sessionStorage.getItem("admin-auth");
 
-  navigate("/admin");
+  if (isAuth !== "true") {
+    navigate("/admin");
+    return;
+  }
+
+  loadHistory();
 }, [navigate]);
 
   // уникальные ники (без дублей)
