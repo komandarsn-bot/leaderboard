@@ -564,3 +564,16 @@ html {
     flex-direction: column;
   }
 }
+
+.history-filters {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 800px) {
+  .history-filters {
+    grid-template-columns: 1fr;
+  }
+}

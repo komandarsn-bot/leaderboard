@@ -9,13 +9,32 @@ const supabase = createClient(
 );
 
 export default function History() {
+  const navigate = useNavigate();
+
   const [items, setItems] = useState([]);
+  const [nickname, setNickname] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   const loadHistory = async () => {
-    const { data, error } = await supabase
+    let query = supabase
       .from("transactions")
       .select("*")
       .order("created_at", { ascending: false });
+
+    if (nickname.trim()) {
+      query = query.ilike("nickname", `%${nickname.trim()}%`);
+    }
+
+    if (dateFrom) {
+      query = query.gte("created_at", `${dateFrom}T00:00:00`);
+    }
+
+    if (dateTo) {
+      query = query.lte("created_at", `${dateTo}T23:59:59`);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error(error);
@@ -26,18 +45,16 @@ export default function History() {
     setItems(data || []);
   };
 
-const navigate = useNavigate();
+  useEffect(() => {
+    const isAuth = sessionStorage.getItem("admin-auth");
 
-useEffect(() => {
-  const isAuth = sessionStorage.getItem("admin-auth");
+    if (isAuth !== "true") {
+      navigate("/admin");
+      return;
+    }
 
-  if (isAuth !== "true") {
-    navigate("/admin");
-    return;
-  }
-
-  loadHistory();
-}, [navigate]);
+    loadHistory();
+  }, [navigate]);
 
   return (
     <div className="history-page">
@@ -45,6 +62,46 @@ useEffect(() => {
         <div className="admin-badge">TRANSACTIONS</div>
         <h1 className="history-title">История операций</h1>
         <p className="history-subtitle">Все начисления очков игрокам</p>
+
+        <div className="history-filters">
+          <input
+            className="admin-input"
+            type="text"
+            placeholder="Поиск по нику"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+
+          <input
+            className="admin-input"
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+          />
+
+          <input
+            className="admin-input"
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+          />
+
+          <button className="admin-button" onClick={loadHistory}>
+            Найти
+          </button>
+
+          <button
+            className="admin-button danger"
+            onClick={() => {
+              setNickname("");
+              setDateFrom("");
+              setDateTo("");
+              setTimeout(loadHistory, 0);
+            }}
+          >
+            Сбросить
+          </button>
+        </div>
 
         <div className="history-table-wrap">
           <table className="history-table">
@@ -71,7 +128,7 @@ useEffect(() => {
         </div>
 
         {items.length === 0 && (
-          <div className="history-empty">История пока пустая</div>
+          <div className="history-empty">Ничего не найдено</div>
         )}
       </div>
     </div>
