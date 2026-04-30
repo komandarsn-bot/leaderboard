@@ -54,12 +54,7 @@ export default function MainPage() {
       setLoading(false);
     }
 
-    // 🔄 2. Потом идёт реальный запрос
-    let url = `${API_URL}/leaderboard`;
 
-if (dateFrom || dateTo) {
-  url += `?from=${dateFrom}&to=${dateTo}`;
-}
 
 const res = await fetch(`${API_URL}/leaderboard`);
     if (!res.ok) throw new Error("server error");
