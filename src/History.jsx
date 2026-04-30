@@ -47,15 +47,8 @@ export default function History() {
   };
 
 useEffect(() => {
-  const isAuth = sessionStorage.getItem("admin-auth");
-
-  if (isAuth !== "true") {
-    navigate("/admin");
-    return;
-  }
-
   loadHistory();
-}, [navigate]);
+}, []);
 
   // уникальные ники (без дублей)
   const uniqueNicknames = [...new Set(items.map(i => i.nickname))];
