@@ -41,8 +41,7 @@ export default function MainPage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-const [dateFrom, setDateFrom] = useState("");
-const [dateTo, setDateTo] = useState("");
+
   
   const loadData = useCallback(async () => {
   try {
@@ -62,7 +61,7 @@ if (dateFrom || dateTo) {
   url += `?from=${dateFrom}&to=${dateTo}`;
 }
 
-const res = await fetch(url);
+const res = await fetch(`${API_URL}/leaderboard`);
     if (!res.ok) throw new Error("server error");
 
     const json = await res.json();
@@ -81,7 +80,7 @@ const res = await fetch(url);
       loadData();
     }, 3000);
   }
-}, [dateFrom, dateTo]);
+}, []);
 
   useEffect(() => {
     loadData();
@@ -114,35 +113,6 @@ const res = await fetch(url);
           />
 
 
-          <div className="main-filters">
-  <input
-    type="date"
-    className="admin-input"
-    value={dateFrom}
-    onChange={(e) => setDateFrom(e.target.value)}
-  />
-
-  <input
-    type="date"
-    className="admin-input"
-    value={dateTo}
-    onChange={(e) => setDateTo(e.target.value)}
-  />
-
-  <button className="admin-button" onClick={loadData}>
-    Фильтр
-  </button>
-
-  <button
-    className="admin-button danger"
-    onClick={() => {
-      setDateFrom("");
-      setDateTo("");
-    }}
-  >
-    Сброс
-  </button>
-</div>
 
           {error && <div className="xp-text">{error}</div>}
 
