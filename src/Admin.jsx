@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const API_URL = "https://leaderboard-server-vgia.onrender.com";
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -191,7 +193,7 @@ setAuthorized(true);
 
           <button
   className="admin-button history"
-  onClick={() => window.location.href = "/admin/history"}
+  onClick={() => navigate("/history")}
 >
   История
 </button>
