@@ -47,15 +47,24 @@ export default function History() {
   };
 
   useEffect(() => {
-    const isAuth = sessionStorage.getItem("admin-auth");
+  const time = sessionStorage.getItem("admin-auth");
 
-    if (isAuth !== "true") {
-      navigate("/admin");
-      return;
-    }
+  if (!time) {
+    navigate("/admin");
+    return;
+  }
 
-    loadHistory();
-  }, [navigate]);
+  const diff = Date.now() - Number(time);
+
+  // 5 минут = 300000 мс
+  if (diff > 300000) {
+    sessionStorage.removeItem("admin-auth");
+    navigate("/admin");
+    return;
+  }
+
+  loadHistory();
+}, [navigate]);
 
   // уникальные ники (без дублей)
   const uniqueNicknames = [...new Set(items.map(i => i.nickname))];
