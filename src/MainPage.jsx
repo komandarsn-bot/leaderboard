@@ -77,22 +77,16 @@ const res = await fetch(`${API_URL}/leaderboard`);
   }
 }, []);
 
-  useEffect(() => {
+useEffect(() => {
+  loadData();
+
+  // 🔁 автообновление каждые 10 секунд
+  const interval = setInterval(() => {
     loadData();
+  }, 8000);
 
-    const channel = supabase
-      .channel("live")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "leaderboard" },
-        loadData
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [loadData]);
+  return () => clearInterval(interval);
+}, [loadData]);
 
   const top10 = data.slice(0, 10);
   const restPlayers = data.slice(10);
