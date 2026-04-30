@@ -29,7 +29,7 @@ export default function Admin() {
     loadPlayers();
   }, []);
 
-const handleLogin = async () => {
+  const handleLogin = async () => {
   if (!login || !password) {
     alert("Введите логин и пароль");
     return;
@@ -44,15 +44,15 @@ const handleLogin = async () => {
       },
     });
 
-    // ❗ НЕ парсим json сразу
     if (!res.ok) {
       alert("Неверный логин или пароль");
       return;
     }
 
-sessionStorage.setItem("admin-auth", "true");
-navigate("/history");
-setAuthorized(true);
+    // ✅ ТОЛЬКО это
+    sessionStorage.setItem("admin-auth", "true");
+    setAuthorized(true);
+
   } catch (err) {
     alert("Неверный логин или пароль");
   }
