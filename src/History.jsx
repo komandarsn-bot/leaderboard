@@ -55,7 +55,7 @@ export default function History() {
 
     loadHistory();
   }, [navigate]);
-
+  const uniqueNicknames = [...new Set(items.map(i => i.nickname))];
   return (
     <div className="history-page">
       <div className="history-card">
@@ -65,12 +65,20 @@ export default function History() {
 
         <div className="history-filters">
           <input
-            className="admin-input"
-            type="text"
-            placeholder="Поиск по нику"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          />
+            <input
+              className="admin-input"
+              type="text"
+              list="nicknames"
+              placeholder="Поиск по нику"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+
+            <datalist id="nicknames">
+            {items.map((item, index) => (
+            <option key={index} value={item.nickname} />
+            ))}
+            </datalist>
 
           <input
             className="admin-input"
