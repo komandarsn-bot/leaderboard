@@ -5,11 +5,14 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// 🔥 ФИЛЬТР (глобальный)
+let leaderboardFilter = {
+  from: null,
+  to: null,
+};
+
 const ADMIN_LOGIN = process.env.ADMIN_LOGIN;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-if (!ADMIN_LOGIN || !ADMIN_PASSWORD) {
-  console.error("ADMIN_LOGIN или ADMIN_PASSWORD не заданы в Render Environment");
-}
 
 const SUPABASE_URL = "https://jolawvvbcpgnrsvuolkw.supabase.co";
 const SUPABASE_KEY = "sb_publishable_FCi8HaHs5fWnX6WA3InGPA_fprHBdNQ";
@@ -19,6 +22,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 app.use(cors());
 app.use(express.json());
 
+// 🔐 Проверка админа
 function checkAdmin(req, res) {
   const adminLogin = req.headers["x-admin-login"];
   const adminPassword = req.headers["x-admin-password"];
@@ -31,64 +35,96 @@ function checkAdmin(req, res) {
   return true;
 }
 
-function getLevel(xp) {
-  if (xp < 100) return 1;
-  if (xp < 200) return 2;
-  if (xp < 300) return 3;
-  if (xp < 400) return 4;
-  if (xp < 500) return 5;
+// 🔥 УСТАНОВКА ФИЛЬТРА
+app.post("/set-filter", (req, res) => {
+  if (!checkAdmin(req, res)) return;
 
-  if (xp < 650) return 6;
-  if (xp < 800) return 7;
-  if (xp < 950) return 8;
-  if (xp < 1100) return 9;
-  if (xp < 1250) return 10;
+  const { from, to } = req.body;
 
-  if (xp < 1500) return 11;
-  if (xp < 1750) return 12;
-  if (xp < 2000) return 13;
-  if (xp < 2250) return 14;
+  leaderboardFilter = {
+    from: from || null,
+    to: to || null,
+  };
 
-  return 15;
-}
+  res.json({ success: true, filter: leaderboardFilter });
+});
 
-function getAvatarByXp(xp) {
-  return `${getLevel(xp)} уровень`;
-}
-
-async function getLeaderboard() {
-  const { data, error } = await supabase
-    .from("leaderboard")
-    .select("*")
-    .order("points", { ascending: false });
-
-  if (error) throw error;
-
-  return data.map((user, index) => ({
-    Место: index + 1,
-    Аватар: user.avatar || "1 уровень",
-    НИК: user.nickname,
-    Очков: Number(user.points) || 0,
-  }));
-}
-
+// 🔥 ОСНОВНОЙ LEADERBOARD
 app.get("/leaderboard", async (req, res) => {
   try {
-    const data = await getLeaderboard();
-    res.json(data);
+    // ❗ если фильтр НЕ задан → обычный leaderboard
+    if (!leaderboardFilter.from && !leaderboardFilter.to) {
+      const { data, error } = await supabase
+        .from("leaderboard")
+        .select("*")
+        .order("points", { ascending: false });
+
+      if (error) throw error;
+
+      const result = (data || []).map((user, index) => ({
+        Место: index + 1,
+        Аватар: user.avatar || "1 уровень",
+        НИК: user.nickname,
+        Очков: Number(user.points) || 0,
+      }));
+
+      return res.json(result);
+    }
+
+    // 🔥 если фильтр есть → считаем по transactions
+    let query = supabase.from("transactions").select("*");
+
+    if (leaderboardFilter.from) {
+      query = query.gte("created_at", `${leaderboardFilter.from}T00:00:00`);
+    }
+
+    if (leaderboardFilter.to) {
+      query = query.lte("created_at", `${leaderboardFilter.to}T23:59:59`);
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw error;
+
+    // 🔥 группировка по никам
+    const grouped = {};
+
+    (data || []).forEach((item) => {
+      const nick = item.nickname;
+
+      if (!grouped[nick]) {
+        grouped[nick] = {
+          НИК: nick,
+          Очков: 0,
+        };
+      }
+
+      grouped[nick].Очков += Number(item.points) || 0;
+    });
+
+    const result = Object.values(grouped)
+      .sort((a, b) => b["Очков"] - a["Очков"])
+      .map((item, index) => ({
+        Место: index + 1,
+        Аватар: "1 уровень",
+        НИК: item["НИК"],
+        Очков: item["Очков"],
+      }));
+
+    res.json(result);
   } catch (error) {
     console.error("GET /leaderboard error:", error);
     res.status(500).json({ error: "Ошибка сервера" });
   }
 });
 
-
+// 🔐 Проверка логина
 app.post("/admin-check", (req, res) => {
   if (!checkAdmin(req, res)) return;
-
   res.json({ ok: true });
 });
 
+// ➕ Добавление очков
 app.post("/add", async (req, res) => {
   try {
     if (!checkAdmin(req, res)) return;
@@ -108,68 +144,57 @@ app.post("/add", async (req, res) => {
       return res.status(400).json({ error: "Сумма слишком маленькая" });
     }
 
-    const { data: existing, error: findError } = await supabase
+    const { data: existing } = await supabase
       .from("leaderboard")
       .select("*")
       .eq("nickname", nickname)
       .maybeSingle();
-
-    if (findError) throw findError;
 
     let totalXp = pointsToAdd;
 
     if (existing) {
       totalXp = Number(existing.points || 0) + pointsToAdd;
 
-      const { error } = await supabase
+      await supabase
         .from("leaderboard")
         .update({
           points: totalXp,
-          avatar: getAvatarByXp(totalXp),
+          avatar: `${Math.min(Math.floor(totalXp / 100) + 1, 15)} уровень`,
         })
         .eq("id", existing.id);
-
-      if (error) throw error;
     } else {
-      const { error } = await supabase.from("leaderboard").insert({
+      await supabase.from("leaderboard").insert({
         nickname,
-        avatar: getAvatarByXp(pointsToAdd),
+        avatar: "1 уровень",
         points: pointsToAdd,
       });
-
-      if (error) throw error;
     }
 
-    const { error: transactionError } = await supabase
-      .from("transactions")
-      .insert({
-        nickname,
-        amount: Number(amount),
-        points: pointsToAdd,
-        avatar: getAvatarByXp(totalXp),
-        action: "add",
-      });
+    // 🔥 запись в историю
+    await supabase.from("transactions").insert({
+      nickname,
+      amount: Number(amount),
+      points: pointsToAdd,
+      avatar: "1 уровень",
+      action: "add",
+    });
 
-    if (transactionError) throw transactionError;
-
-    const data = await getLeaderboard();
-    res.json(data);
+    res.json({ ok: true });
   } catch (error) {
     console.error("POST /add error:", error);
     res.status(500).json({ error: "Ошибка сервера" });
   }
 });
 
+// 🧨 Сброс
 app.post("/reset", async (req, res) => {
   try {
     if (!checkAdmin(req, res)) return;
 
-    const { error } = await supabase
+    await supabase
       .from("leaderboard")
       .delete()
       .gte("points", 0);
-
-    if (error) throw error;
 
     await supabase.from("transactions").insert({
       nickname: "ADMIN",
