@@ -187,11 +187,11 @@ setAuthorized(true);
             ))}
           </datalist>
 
-          <button className="admin-button" onClick={addUser}>
-            Добавить очки
-          </button>
+<button className="admin-button" onClick={addUser}>
+  Добавить очки
+</button>
 
-          <button
+<button
   className="admin-button history"
   onClick={() => navigate("/admin/history")}
 >
