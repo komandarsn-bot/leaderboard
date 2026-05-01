@@ -465,12 +465,13 @@ width: clamp(65px, 12vh, 125px);
     max-width: none;
   }
 
-  .rest {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 80px;
-    padding-bottom: 40px;
-  }
+.rest {
+  width: 100%;
+
+  margin-top: 120vh;
+
+  padding-bottom: 80px;
+}
 
   .place {
     width: 32px;
